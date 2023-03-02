@@ -21,7 +21,8 @@ public class Vector extends Point {
      * @param double3 the Double3 object representing the point
      */
     Vector(Double3 double3) {
-      this(double3.d1, double3.d2, double3.d3 );
+
+        this(double3.d1, double3.d2, double3.d3 );
     }
     public double length(){
         return Math.sqrt(lengthSquared());
@@ -37,5 +38,29 @@ public class Vector extends Point {
     public Vector normalize() {
         double len=length();
         return new Vector(xyz.d1/len,xyz.d2/len,xyz.d3/len);
+    }
+
+    public Vector crossProduct(Vector otherVector) {
+        double x=this.xyz.d2*otherVector.xyz.d3-this.xyz.d3*otherVector.xyz.d2;
+        double y=this.xyz.d3*otherVector.xyz.d1-this.xyz.d1*otherVector.xyz.d3;
+        double z=this.xyz.d1*otherVector.xyz.d2-this.xyz.d2*otherVector.xyz.d1;
+        return new Vector(x,y,z);
+    }
+
+    public double dotProduct(Vector u) {
+
+    }
+
+    /**
+     * Determines whether this Point object is equal to another object.
+     *
+     * @param o the object to compare with this Point object
+     * @return true if the two objects are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this==o) return true;
+        if (!(o instanceof Vector vector)) return false;
+        return xyz.equals(vector.xyz);
     }
 }
