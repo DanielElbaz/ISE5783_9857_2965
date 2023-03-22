@@ -13,7 +13,7 @@ public class Point {
      * @param z the z coordinate of the point
      */
     public Point(double x, double y, double z) {
-        xyz = new Double3(x, y, z); // create a new Double3 object with the coordinates
+        xyz = new Double3(x, y, z);
     }
 
     /**
@@ -22,15 +22,9 @@ public class Point {
      * @param double3 the Double3 object representing the point
      */
     Point(Double3 double3) {
-        this(double3.d1, double3.d2, double3.d3); // call the other constructor with the coordinates in the Double3 object
+        this(double3.d1, double3.d2, double3.d3);
     }
 
-    /**
-     * Determines whether this Point object is equal to another object.
-     *
-     * @param o the object to compare with this Point object
-     * @return true if the two objects are equal, false otherwise
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true; // check if the objects are the same
@@ -60,7 +54,7 @@ public class Point {
      * @return the distance between this Point object and the other Point object
      */
     public double distance(Point other) {
-        return Math.sqrt(distanceSquared(other)); // use the distanceSquared method to calculate the distance and return the square root
+        return Math.sqrt(distanceSquared(other));
     }
 
     /**
@@ -76,13 +70,22 @@ public class Point {
         return dx * dx + dy * dy + dz * dz; // return the sum of the squared differences
     }
 
+    /**
+     *
+     * @param vector;
+     * @return new point that is the sum of this point and the vector;
+     */
     public Point add(Vector vector) {
         return new Point(xyz.add(vector.xyz));
 
     }
 
+    /**
+     *
+     * @param secondPoint;
+     * @return new vector that is the subtraction of this point and the second point;
+     */
     public Vector subtract(Point secondPoint) {
-
         return new Vector(xyz.subtract(secondPoint.xyz));
     }
 }
