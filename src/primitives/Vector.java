@@ -24,10 +24,19 @@ public class Vector extends Point {
 
         this(double3.d1, double3.d2, double3.d3 );
     }
+
+    /**
+     * @return length of the vector
+     * by the formula sqrt(x^2+y^2+z^2)
+     */
     public double length(){
         return Math.sqrt(lengthSquared());
     }
 
+    /**
+     * @return length squared of the vector
+     *
+     */
     public double lengthSquared() {
         double x = xyz.d1;
         double y = xyz.d2;
@@ -35,11 +44,20 @@ public class Vector extends Point {
         return x*x+y*y+z*z;
     }
 
+    /**
+     * @return normalize vector by the formula
+     * (x/length,y/length,z/length)
+     */
     public Vector normalize() {
         double len=length();
         return new Vector(xyz.d1/len,xyz.d2/len,xyz.d3/len);
     }
 
+    /**
+     *
+     * @param otherVector;
+     * @return new vector that is the cross product of this vector and the other vector;
+     */
     public Vector crossProduct(Vector otherVector) {
         double x=this.xyz.d2*otherVector.xyz.d3-this.xyz.d3*otherVector.xyz.d2;
         double y=this.xyz.d3*otherVector.xyz.d1-this.xyz.d1*otherVector.xyz.d3;
@@ -47,8 +65,15 @@ public class Vector extends Point {
         return new Vector(x,y,z);
     }
 
+    /**
+     *
+     * @param u;
+     * @return the dot product of this vector and the other vector;
+     */
     public double dotProduct(Vector u) {
-
+        return  this.xyz.d1*u.xyz.d1+
+                this.xyz.d2*u.xyz.d2+
+                this.xyz.d3*u.xyz.d3;
     }
 
     /**
@@ -61,6 +86,36 @@ public class Vector extends Point {
     public boolean equals(Object o) {
         if (this==o) return true;
         if (!(o instanceof Vector vector)) return false;
-        return xyz.equals(vector.xyz);
+        return super.equals(vector);
     }
+
+    /**
+     * Returns a string representation of this Point object.
+     *
+     * @return a string representation of this Point object
+     */
+    @Override
+    public String toString() {
+        return "->" + super.toString();
+    }
+
+
+    @Override
+    public Vector add(Vector vector1) {
+        return new Vector(xyz.d1+vector1.xyz.d1,
+                xyz.d2+vector1.xyz.d2,
+                xyz.d3+vector1.xyz.d3);
+    }
+
+    /**
+     *
+     * @param alpha;
+     * @return new vector that is the scale of this vector by alpha;
+     */
+    public Vector scale(double alpha){
+        return new Vector(xyz.d1*alpha,
+                xyz.d2*alpha,
+                xyz.d3*alpha);
+    }
+
 }
