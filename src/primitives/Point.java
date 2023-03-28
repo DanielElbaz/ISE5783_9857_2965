@@ -1,6 +1,9 @@
 package primitives;
 
 import java.util.Objects;
+/*
+ * @author: Daniel Elbaz & Efraim Levy
+ */
 
 public class Point {
     final Double3 xyz;

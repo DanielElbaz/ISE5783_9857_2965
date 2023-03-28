@@ -3,6 +3,8 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+import static primitives.Util.isZero;
+
 /**
  * The Plane class represents a plane in a 3D space.
  */
@@ -27,7 +29,11 @@ public class Plane implements Geometry {
      */
     public Plane(Point p1, Point p2, Point p3) {
         this.q0 = p1;
-        this.normal = p2.subtract(p1).crossProduct(p3.subtract(p1));
+        Vector q2=p2.subtract(p1);
+        Vector q3=p3.subtract(p1);
+        if(isZero(q2.dotProduct(q3)))
+            throw new IllegalArgumentException("The points are on the same line");
+        this.normal = q2.crossProduct(q3).normalize();
     }
 
     public Vector getNormal(Point p) {
