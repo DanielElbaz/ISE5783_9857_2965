@@ -1,6 +1,10 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
+
+import java.util.List;
 
 /**
 
@@ -17,6 +21,36 @@ public class Triangle extends Polygon {
      */
     public Triangle(Point p1, Point p2, Point p3) {
         super(p1, p2, p3);
+    }
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        List<Point> TIP = plane.findIntersections(ray); //TIP == Triangle Intersection Points
+        if(TIP == null){
+            return null;
+        }
+        Point returnedP = TIP.get(0);
+        Point p1 = vertices.get(0);
+        Point p2 = vertices.get(1);
+        Point p3 = vertices.get(2);
+        if(returnedP.equals(p1) || returnedP.equals(p2) || returnedP.equals(p3)){
+            return null;
+        }
+        Vector dir = ray.getDir();
+        Point p0 = ray.getP0();
+        Vector v1 = p1.subtract(p0);
+        Vector v2 = p2.subtract(p0);
+        Vector v3 = p3.subtract(p0);
+        Vector n1 = (v1.crossProduct(v2)).normalize();
+        Vector n2 = (v2.crossProduct(v3)).normalize();
+        Vector n3 = (v3.crossProduct(v1)).normalize();
+        double check1 = dir.dotProduct(n1);
+        double check2 = dir.dotProduct(n2);
+        double check3 = dir.dotProduct(n3);
+        if(check1*check2 <= 0 || check1*check3 <= 0){
+            return null;
+        }
+        return TIP;
+
     }
 }
 

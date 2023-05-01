@@ -28,6 +28,8 @@ public class Point {
         this(double3.d1, double3.d2, double3.d3);
     }
 
+    public double getX(){ return xyz.d1;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true; // check if the objects are the same
