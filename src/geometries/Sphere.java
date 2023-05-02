@@ -38,7 +38,7 @@ public class Sphere extends RadialGeometry{
         Point p0 = ray.getP0(); // the origin of the ray
         Vector dir = ray.getDir();
         if(p0.equals(center)){
-            return List.of(p0.add(dir.scale(radius))); // the ray starts at the center of the sphere
+            return List.of(ray.getPoint(radius)); // the ray starts at the center of the sphere
         }
         Vector U = center.subtract(p0); // the vector from the origin of the ray to the center of the sphere
         double tm = U.dotProduct(dir); // the length of the projection of U on the ray
@@ -52,10 +52,10 @@ public class Sphere extends RadialGeometry{
         if(alignZero(t2) <= 0){ // the ray starts after the sphere
             return null;
         } else if(alignZero(t1) > 0){ // the ray starts before the sphere
-            return List.of(p0.add(dir.scale(t1)),p0.add(dir.scale(t2))); // the ray starts before the sphere and ends after the sphere
+            return List.of(ray.getPoint(t1),ray.getPoint(t2)); // the ray starts before the sphere and ends after the sphere
         }
         else { // the ray starts inside the sphere
-            return List.of(p0.add(dir.scale(t2)));
+            return List.of(ray.getPoint(t2));
         }
     }
 }

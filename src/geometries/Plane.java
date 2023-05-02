@@ -36,11 +36,10 @@ public class Plane implements Geometry {
         Vector q2=p2.subtract(p1);
         Vector q3=p3.subtract(p1);
        try{
-           Vector v = q2.crossProduct(q3);
+           this.normal = q2.crossProduct(q3).normalize();
                   } catch (IllegalArgumentException e){
            throw new IllegalArgumentException("The points are on the same line");
        }
-        this.normal = q2.crossProduct(q3).normalize();
     }
 
     public Vector getNormal(Point p) {
@@ -52,10 +51,10 @@ public class Plane implements Geometry {
     }
     @Override
     /**
-     * @param ray
-     * @return
+     * @param ray the ray to find the intersections with the plane
+     * @return a list of the intersection points of the specified ray with the plane.
      */
-    public List<Point> findIntersections(Ray ray) { //TODO: check if the ray is in the plane
+    public List<Point> findIntersections(Ray ray) { // check if the ray is in the plane
         Vector dir = ray.getDir();
         double nv = normal.dotProduct(dir);
         if(isZero(nv)) {
@@ -64,9 +63,9 @@ public class Plane implements Geometry {
 
         Point p0 = ray.getP0();
         double NQminP0 = normal.dotProduct(q0.subtract(p0));
-        double t = alignZero(NQminP0/nv); //TODO: check if t is negative
+        double t = alignZero(NQminP0/nv); // check if t is negative
         if(t > 0){
-            Point intersectionPoint = p0.add(dir.scale(t)); //TODO: check if the point is on the plane
+            Point intersectionPoint = ray.getPoint(t); //check if the point is on the plane
             return List.of(intersectionPoint);
         }
         else { // t <= 0
