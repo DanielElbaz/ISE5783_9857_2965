@@ -31,34 +31,44 @@ public class Triangle extends Polygon {
      @return the normal vector to the triangle at the specified point.
      */
     public List<Point> findIntersections(Ray ray) {
-        List<Point> TIP = plane.findIntersections(ray); //TIP == Triangle Intersection Points
+        //TIP == Triangle Intersection Points
+        List<Point> TIP = plane.findIntersections(ray);
+
         if(TIP == null){
             return null;
         }
+
         Point returnedP = TIP.get(0);
+
         Point p1 = vertices.get(0);
         Point p2 = vertices.get(1); //p1, p2, p3 are the vertices of the triangle
         Point p3 = vertices.get(2);
-        if(returnedP.equals(p1) || returnedP.equals(p2) || returnedP.equals(p3)){ //if the ray intersects the
-                                                                            // triangle at one of its vertices,
+
+        //if the ray intersects the triangle at one of its vertices,
+        if(returnedP.equals(p1) || returnedP.equals(p2) || returnedP.equals(p3)){
             return null;
         }
+
         Vector dir = ray.getDir();
         Point p0 = ray.getP0();
+
         Vector v1 = p1.subtract(p0);//v1 = p1 - p0
         Vector v2 = p2.subtract(p0);
         Vector v3 = p3.subtract(p0);
+
         Vector n1 = (v1.crossProduct(v2)).normalize(); //n1 = v1 x v2
         Vector n2 = (v2.crossProduct(v3)).normalize();
         Vector n3 = (v3.crossProduct(v1)).normalize();
-        double check1 = dir.dotProduct(n1); //check1 = v * n1
-        double check2 = dir.dotProduct(n2);
-        double check3 = dir.dotProduct(n3);
-        if(alignZero(check1*check2) <= 0 || alignZero(check1*check3) <= 0){ //if check1 and check2 have different signs,
-                                                        // then the ray intersects the triangle
-            return null;
+
+        double check1 = alignZero(dir.dotProduct(n1)); //check1 = v * n1
+        double check2 = alignZero(dir.dotProduct(n2));
+        double check3 = alignZero(dir.dotProduct(n3));
+
+        if((check1 < 0 && check2 < 0 && check3 < 0) || (check1 > 0 && check2 > 0 && check3 > 0)){
+            return TIP;
         }
-        return TIP;
+
+        return null;
 
     }
 }

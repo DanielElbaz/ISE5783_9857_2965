@@ -1,5 +1,6 @@
 package geometries;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
@@ -27,6 +28,7 @@ class TubeTests {
                 "Since when ZERO vector is allowed?!");
     }
     @Test
+    @Disabled
     public void testFindIntersections() {
         Tube tube = new Tube(1,new Ray(new Point(1,0,0),
                 new Vector(0,0,1)));

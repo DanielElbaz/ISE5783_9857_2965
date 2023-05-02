@@ -22,9 +22,10 @@ class PlaneTests {
             fail("Failed constructing a correct plane \n" + e.getMessage());
         }
         assertThrows(IllegalArgumentException.class,
-                () -> new Plane(new Point(1, 0, 0),
+                () -> new Plane(
+                        new Point(1, 0, 0),
                         new Point(2, 0, 0),
-                        new Point(1, 1, 1)),
+                        new Point(-1, 0, 0)),
                 "Constructed a plane with 3 points that are in the same line");
 
     }
