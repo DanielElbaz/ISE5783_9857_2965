@@ -6,6 +6,8 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 /**
  * The Sphere class extends RadialGeometry and represents a sphere in a 3D space.
  */
@@ -27,27 +29,32 @@ public class Sphere extends RadialGeometry{
         return v.normalize();
     }
     @Override
+    /**
+     * Returns a list of the intersection points of the specified ray with the sphere.
+     * @param ray the ray to find the intersections with the sphere.
+     * @return a list of the intersection points of the specified ray with the sphere.
+     */
     public List<Point> findIntersections(Ray ray) {
-        Point p0 = ray.getP0();
+        Point p0 = ray.getP0(); // the origin of the ray
         Vector dir = ray.getDir();
         if(p0.equals(center)){
-            return List.of(p0.add(dir.scale(radius)));
+            return List.of(p0.add(dir.scale(radius))); // the ray starts at the center of the sphere
         }
-        Vector U = center.subtract(p0);
-        double tm = U.dotProduct(dir);
-        double d = Math.sqrt(U.lengthSquared() - (tm*tm));
-        if(d >= radius){
+        Vector U = center.subtract(p0); // the vector from the origin of the ray to the center of the sphere
+        double tm = U.dotProduct(dir); // the length of the projection of U on the ray
+        double d = Math.sqrt(U.lengthSquared() - (tm*tm)); // the distance between the center of the sphere and the ray
+        if(alignZero(radius - d) <= 0){ // the ray doesn't intersect the sphere
             return null;
         }
-        double th = Math.sqrt(radius*radius - d*d);
-        double t1 = tm - th;
-        double t2 = tm + th;
-        if(t2 <= 0){
+        double th = Math.sqrt(radius*radius - d*d); // the length of the projection of U on the ray
+        double t1 = tm - th; // the length of the ray from the origin to the first intersection point
+        double t2 = tm + th; // the length of the ray from the origin to the second intersection point
+        if(alignZero(t2) <= 0){ // the ray starts after the sphere
             return null;
-        } else if(t1 > 0){
-            return List.of(p0.add(dir.scale(t1)),p0.add(dir.scale(t2)));
+        } else if(alignZero(t1) > 0){ // the ray starts before the sphere
+            return List.of(p0.add(dir.scale(t1)),p0.add(dir.scale(t2))); // the ray starts before the sphere and ends after the sphere
         }
-        else {
+        else { // the ray starts inside the sphere
             return List.of(p0.add(dir.scale(t2)));
         }
     }

@@ -93,5 +93,7 @@ public class Point {
     public Vector subtract(Point secondPoint) {
         return new Vector(xyz.subtract(secondPoint.xyz));
     }
+
+
 }
 

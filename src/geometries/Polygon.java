@@ -1,5 +1,6 @@
 package geometries;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 import java.util.ArrayList;
@@ -99,33 +100,37 @@ public class Polygon implements Geometry {
      * @return
      */
     @Override
+    /**
+     * @param ray
+     * @return list of intersection points
+     */
     public List<Point> findIntersections(Ray ray) {
-        List<Point> PIP = plane.findIntersections(ray); //TIP == Polygon Intersection Points
+        List<Point> PIP = plane.findIntersections(ray); //PIP == Polygon Intersection Points
         if(PIP == null){
             return null;
         }
-        Point returnedP = PIP.get(0);
-        for (Point ver: vertices) {
+        Point returnedP = PIP.get(0); //returnedP == returned Point from the plane intersection
+        for (Point ver: vertices) { //check if the returned point is one of the vertices
             if(ver.equals(returnedP)){
                 return null;
             }
         }
-        Point p0 = ray.getP0();
+        Point p0 = ray.getP0(); // Get the origin of the ray
         LinkedList<Vector> Vi = new LinkedList<>();
-        for (Point ver: vertices) {
+        for (Point ver: vertices) { // Get the vectors from the origin to the vertices
             Vi.add(ver.subtract(p0));
         }
+
         Vector dir = ray.getDir();
         LinkedList<Vector> Ni = new LinkedList<>();
-        for (int i = 0; i < Vi.size() - 2; i++) {
+        for (int i = 0; i < Vi.size() - 2; i++) { //
             Ni.add(Vi.get(i).crossProduct(Vi.get(i+1)).normalize());
         }
-        Ni.add(Vi.get(Vi.size() - 1).crossProduct(Vi.get(0)).normalize());
+        Ni.add(Vi.get(Vi.size() - 1).crossProduct(Vi.get(0)).normalize()); // Add the last vector
         double check = dir.dotProduct(Ni.get(0));
-        for (Vector Nj:
-             Ni) {
+        for (Vector Nj: Ni) { // Check if there is a change in the sign of the dot product
             double tempCheck = dir.dotProduct(Nj);
-            if(check*tempCheck <= 0){
+            if(alignZero(check*tempCheck) <= 0){ // If there is a change in the sign of the dot product
                 return null;
             }
         }
