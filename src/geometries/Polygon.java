@@ -97,7 +97,7 @@ public class Polygon implements Geometry {
 
     /**
      * @param ray
-     * @return
+     * @return list of intersection points with the plane
      */
     @Override
     /**

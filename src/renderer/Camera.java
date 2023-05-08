@@ -1,6 +1,7 @@
 package renderer;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 import static primitives.Util.isZero;
@@ -50,6 +51,31 @@ public class Camera {
         this.vTo = vTo.normalize();
         this.vRight= vTo.crossProduct(vUp).normalize();
     }
-
+    public Camera setVPSize(double width, double height){
+        this.width=width;
+        this.height=height;
+        return this;
+    }
+    public Camera setVPDistance(double distance){
+        this.distance=distance;
+        return this;
+    }
+    public Ray constructRayThroughPixel(int nX, int nY, int j, int i){
+        Point Pc=place.add(vTo.scale(distance)); //the center of the view plane
+        double Ry=height/nY;
+        double Rx=width/nX;
+        double yi=(i-nY/2d)*Ry+Ry/2d; //the y coordinate of the pixel
+        double xj=(j-nX/2d)*Rx+Rx/2d; //the x coordinate of the pixel
+        Point Pij=Pc; //the point on the view plane
+        if(!isZero(xj))
+            //the point on the view plane with the x coordinate of the pixel added to it
+            Pij=Pij.add(vRight.scale(xj));
+        if(!isZero(yi))
+            //the point on the view plane with the y coordinate of the pixel added to it
+            // (the minus is because the y-axis is upside down)
+            Pij=Pij.add(vUp.scale(-yi));
+        Vector Vij=Pij.subtract(place); //the vector from the camera to the point on the view plane
+        return new Ray(place,Vij); //the ray from the camera to the point on the view plane
+    }
 
 }
