@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e08e8dc7-072f-4d7d-8a5f-fe1e66a2c6c1" name="Changes" comment="Start Stage 4">
-      <change afterPath="$PROJECT_DIR$/unitTests/renderer/IntegrationTests.java" afterDir="false" />
+    <list default="true" id="e08e8dc7-072f-4d7d-8a5f-fe1e66a2c6c1" name="Changes" comment="End Stage 4">
+      <change afterPath="$PROJECT_DIR$/src/primitives/Color.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/ImageWriter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unitTests/renderer/ImageWriterTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/renderer/CameraTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/CameraTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,11 +82,11 @@
       <recent name="primitive" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\src\renderer" />
+      <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\src\primitives" />
       <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\unitTests\renderer" />
       <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\unitTests\geometries" />
       <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\src\geometries" />
-      <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\src" />
-      <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\src\primitive" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -267,7 +268,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1683563260106</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL‎-00013" summary="End Stage 4">
+      <created>1683647611911</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL‎-00013" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1683647611911</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -288,7 +296,8 @@
     <MESSAGE value="Start stage2" />
     <MESSAGE value="Stage 3" />
     <MESSAGE value="Start Stage 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Start Stage 4" />
+    <MESSAGE value="End Stage 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="End Stage 4" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
