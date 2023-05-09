@@ -43,7 +43,7 @@ public class Camera {
         return distance;
     }
 
-    public Camera(Point place, Vector vUp, Vector vTo) {
+    public Camera(Point place, Vector vTo, Vector vUp) {
         if(!isZero(vUp.dotProduct(vTo)))
             throw new IllegalArgumentException("The vectors are not orthogonal");
         this.place = place;
@@ -60,12 +60,20 @@ public class Camera {
         this.distance=distance;
         return this;
     }
+    /**
+     * Constructs a ray through a pixel
+     * @param nX the number of pixels in the x direction
+     * @param nY the number of pixels in the y direction
+     * @param j the x coordinate of the pixel
+     * @param i the y coordinate of the pixel
+     * @return the ray through the pixel
+     */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i){
         Point Pc=place.add(vTo.scale(distance)); //the center of the view plane
         double Ry=height/nY;
         double Rx=width/nX;
-        double yi=(i-nY/2d)*Ry+Ry/2d; //the y coordinate of the pixel
-        double xj=(j-nX/2d)*Rx+Rx/2d; //the x coordinate of the pixel
+        double yi=-(i-(nY-1)/2d)*Ry; //the y coordinate of the pixel
+        double xj=(j-(nX-1)/2d)*Rx; //the x coordinate of the pixel
         Point Pij=Pc; //the point on the view plane
         if(!isZero(xj))
             //the point on the view plane with the x coordinate of the pixel added to it
@@ -73,7 +81,7 @@ public class Camera {
         if(!isZero(yi))
             //the point on the view plane with the y coordinate of the pixel added to it
             // (the minus is because the y-axis is upside down)
-            Pij=Pij.add(vUp.scale(-yi));
+            Pij=Pij.add(vUp.scale(yi));
         Vector Vij=Pij.subtract(place); //the vector from the camera to the point on the view plane
         return new Ray(place,Vij); //the ray from the camera to the point on the view plane
     }

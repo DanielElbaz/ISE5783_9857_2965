@@ -17,7 +17,7 @@ class CameraTests {
 
 	/**
 	 * Test method for
-	 * {@link renderer.Camera#constructRayThroughPixel(int, int, int, int)}.
+	 * {@link Camera#constructRayThroughPixel(int, int, int, int)}.
 	 */
 	@Test
 	void testConstructRay() {
