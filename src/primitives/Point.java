@@ -8,6 +8,8 @@ import java.util.Objects;
 public class Point {
     final Double3 xyz;
 
+    public static Point ZERO = new Point(0,0,0);
+
     /**
      * Constructs a Point object with the specified x, y and z coordinates.
      *

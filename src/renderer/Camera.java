@@ -1,8 +1,11 @@
 package renderer;
 
+import primitives.Color;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+
+import java.util.MissingResourceException;
 
 import static primitives.Util.isZero;
 
@@ -14,6 +17,8 @@ public class Camera {
     private double height;
     private double width;
     private double distance;
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTracerBase;
 
     public Point getPlace() {
         return place;
@@ -60,6 +65,14 @@ public class Camera {
         this.distance=distance;
         return this;
     }
+    public Camera setImageWriter(ImageWriter imageWriter){
+        this.imageWriter = imageWriter;
+        return this;
+    }
+    public Camera setRayTracer(RayTracerBase tracer){
+        this.rayTracerBase = tracer;
+        return this;
+    }
     /**
      * Constructs a ray through a pixel
      * @param nX the number of pixels in the x direction
@@ -86,4 +99,47 @@ public class Camera {
         return new Ray(place,Vij); //the ray from the camera to the point on the view plane
     }
 
+    public void renderImage(){
+        if(this.place == null ||
+        this.vTo == null ||
+        this.vUp == null ||
+        this.vRight == null||
+        this.distance == 0 ||
+        this.height == 0 ||
+        this.width == 0 ||
+        this.rayTracerBase == null ||
+        this.imageWriter == null){
+            throw new MissingResourceException("some filed is empty","Camera","");
+            //throw new UnsupportedOperationException();
+        }
+        for (int i = 0; i < imageWriter.getNx(); i++) {
+            for (int j = 0; j < imageWriter.getNy(); j++) {
+                Color pixColor = castRay(i,j);
+                imageWriter.writePixel(i,j,pixColor);
+            }
+        }
+    }
+    public void printGrid(int interval, Color color){
+        if(this.imageWriter == null){
+            throw new MissingResourceException("filed empty","Camera", "ImageWriter");
+        }
+        for (int i = 0; i < imageWriter.getNx(); i++) {
+            for (int j = 0; j < imageWriter.getNy(); j++) {
+                if(i%100 == 0 || j%100 == 0){
+                    imageWriter.writePixel(i,j,color);
+                }
+            }
+        }
+    }
+    public void writeToImage(){
+        if(this.imageWriter == null){
+            throw new MissingResourceException("filed empty","Camera", "ImageWriter");
+        }
+
+        imageWriter.writeToImage();
+    }
+    private Color castRay(int pixX, int pixY){
+        Ray ray = constructRayThroughPixel(imageWriter.getNx(),imageWriter.getNx(),pixX,pixY);
+        return rayTracerBase.traceRay(ray);
+    }
 }
