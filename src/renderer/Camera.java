@@ -112,8 +112,10 @@ public class Camera {
             throw new MissingResourceException("some filed is empty","Camera","");
             //throw new UnsupportedOperationException();
         }
-        for (int i = 0; i < imageWriter.getNx(); i++) {
-            for (int j = 0; j < imageWriter.getNy(); j++) {
+        int xPix = imageWriter.getNx();
+        int yPix = imageWriter.getNy();
+        for (int i = 0; i < xPix; i++) {
+            for (int j = 0; j < yPix; j++) {
                 Color pixColor = castRay(i,j);
                 imageWriter.writePixel(i,j,pixColor);
             }
@@ -123,8 +125,10 @@ public class Camera {
         if(this.imageWriter == null){
             throw new MissingResourceException("filed empty","Camera", "ImageWriter");
         }
-        for (int i = 0; i < imageWriter.getNx(); i++) {
-            for (int j = 0; j < imageWriter.getNy(); j++) {
+        int xPix = imageWriter.getNx();
+        int yPix = imageWriter.getNy();
+        for (int i = 0; i < xPix; i++) {
+            for (int j = 0; j < yPix; j++) {
                 if(i%100 == 0 || j%100 == 0){
                     imageWriter.writePixel(i,j,color);
                 }
@@ -141,5 +145,15 @@ public class Camera {
     private Color castRay(int pixX, int pixY){
         Ray ray = constructRayThroughPixel(imageWriter.getNx(),imageWriter.getNx(),pixX,pixY);
         return rayTracerBase.traceRay(ray);
+    }
+
+    public Camera rotateLeft(double rad){
+        Vector rotVup = vUp.rotate(rad, vRight);
+        return new Camera(place,vTo,rotVup);
+    }
+
+    public Camera rotateRight(double rad){
+        Vector rotVup = vUp.rotate(rad, vRight.scale(-1));
+        return new Camera(place,vTo,rotVup);
     }
 }

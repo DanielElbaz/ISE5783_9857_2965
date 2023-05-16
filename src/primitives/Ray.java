@@ -56,7 +56,7 @@ public class Ray {
         double minDistance = Double.MAX_VALUE;
 
         for (Point point:points) {
-            double distance = p0.distance(point);
+            double distance = p0.distanceSquared(point);
             if(distance < minDistance){
                 minDistance = distance;
                 closest = point;

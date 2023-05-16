@@ -118,4 +118,17 @@ public class Vector extends Point {
                 xyz.d3*alpha);
     }
 
+    public Vector rotate(double rad, Vector axis) {
+        //rad = rad%(2*(Math.PI));
+
+        if (rad == Math.PI/4 || rad == 3*Math.PI/4){
+            return this.scale(Math.sin(rad));
+        } else if (rad == 0 || rad == Math.PI) {
+            return axis.scale(Math.cos(rad));
+        }
+
+        Vector V1 = axis.scale(Math.cos(rad));
+        Vector V2 = this.scale(Math.sin(rad));
+        return V1.add(V2);
+    }
 }
