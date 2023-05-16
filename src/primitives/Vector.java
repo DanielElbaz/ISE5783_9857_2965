@@ -127,8 +127,8 @@ public class Vector extends Point {
             return axis.scale(Math.cos(rad));
         }
 
-        Vector V1 = axis.scale(Math.cos(rad));
-        Vector V2 = this.scale(Math.sin(rad));
+        Vector V1 = this.scale(Math.cos(rad));
+        Vector V2 = axis.scale(Math.sin(rad));
         return V1.add(V2);
     }
 }

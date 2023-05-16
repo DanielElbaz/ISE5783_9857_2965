@@ -148,12 +148,12 @@ public class Camera {
     }
 
     public Camera rotateLeft(double rad){
-        Vector rotVup = vUp.rotate(rad, vRight);
+        Vector rotVup = vUp.rotate(-1*rad, vRight.scale(-1));
         return new Camera(place,vTo,rotVup);
     }
 
     public Camera rotateRight(double rad){
-        Vector rotVup = vUp.rotate(rad, vRight.scale(-1));
+        Vector rotVup = vUp.rotate(-1*rad, vRight);
         return new Camera(place,vTo,rotVup);
     }
 }
