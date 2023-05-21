@@ -8,6 +8,7 @@ import java.util.List;
 public abstract class Intersectable { // interface for all the geometries that can be intersected by a ray
     /**
      * Returns a list of intersection points of the ray with the geometry.
+     *
      * @param ray the ray with which the intersection is checked.
      * @return a list of intersection points of the ray with the geometry.
      */
@@ -32,19 +33,28 @@ public abstract class Intersectable { // interface for all the geometries that c
             this.geometry = geometry;
             this.point = point;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof GeoPoint)) {
+                return false;
+            }
+            GeoPoint geoPoint = (GeoPoint) obj;
+            return this == geoPoint & this.point.equals(geoPoint.point);
+        }
+
+        @Override
+        public String toString() {
+            return "geometry:" + geometry.toString()
+                    + "point:" + point.toString();
+        }
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+
+    public List<GeoPoint> findGeoIntersections(Ray ray){
+        return findGeoIntersectionsHelper(ray);
     }
 
-    @Override
-    public String toString() {
-        return "Intersectable{}";
-    }
-
-    public abstract List<GeoPoint>findGeoIntersections(Ray ray);
     protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 }
 

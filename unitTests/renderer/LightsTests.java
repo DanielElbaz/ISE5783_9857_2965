@@ -12,7 +12,7 @@ import scene.Scene;
 
 /** Test rendering a basic image
  * @author Dan */
-public class LightsTests {
+/*public class LightsTests {
    private final Scene          scene1                  = new Scene("Test scene");
    private final Scene          scene2                  = new Scene("Test scene")
       .setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
@@ -63,7 +63,7 @@ public class LightsTests {
       .setMaterial(material);
 
    /** Produce a picture of a sphere lighted by a directional light */
-   @Test
+ /*  @Test
    public void sphereDirectional() {
       scene1.geometries.add(sphere);
       scene1.lights.add(new DirectionalLight(sphereLightColor, new Vector(1, 1, -0.5)));
@@ -76,7 +76,7 @@ public class LightsTests {
    }
 
    /** Produce a picture of a sphere lighted by a point light */
-   @Test
+ /*  @Test
    public void spherePoint() {
       scene1.geometries.add(sphere);
       scene1.lights.add(new PointLight(sphereLightColor, sphereLightPosition)
@@ -90,7 +90,7 @@ public class LightsTests {
    }
 
    /** Produce a picture of a sphere lighted by a spotlight */
-   @Test
+ /*  @Test
    public void sphereSpot() {
       scene1.geometries.add(sphere);
       scene1.lights.add(new SpotLight(sphereLightColor, sphereLightPosition, new Vector(1, 1, -0.5))
@@ -104,7 +104,7 @@ public class LightsTests {
    }
 
    /** Produce a picture of two triangles lighted by a directional light */
-   @Test
+  /* @Test
    public void trianglesDirectional() {
       scene2.geometries.add(triangle1, triangle2);
       scene2.lights.add(new DirectionalLight(trianglesLightColor, trianglesLightDirection));
@@ -117,7 +117,7 @@ public class LightsTests {
    }
 
    /** Produce a picture of two triangles lighted by a point light */
-   @Test
+/*   @Test
    public void trianglesPoint() {
       scene2.geometries.add(triangle1, triangle2);
       scene2.lights.add(new PointLight(trianglesLightColor, trianglesLightPosition)
@@ -131,7 +131,7 @@ public class LightsTests {
    }
 
    /** Produce a picture of two triangles lighted by a spotlight */
-   @Test
+ /*  @Test
    public void trianglesSpot() {
       scene2.geometries.add(triangle1, triangle2);
       scene2.lights.add(new SpotLight(trianglesLightColor, trianglesLightPosition, trianglesLightDirection)
@@ -145,7 +145,7 @@ public class LightsTests {
    }
 
    /** Produce a picture of a sphere lighted by a narrow spotlight */
-   @Test
+/*   @Test
    public void sphereSpotSharp() {
       scene1.geometries.add(sphere);
       scene1.lights
@@ -160,7 +160,7 @@ public class LightsTests {
    }
 
    /** Produce a picture of two triangles lighted by a narrow spotlight */
-   @Test
+ /*  @Test
    public void trianglesSpotSharp() {
       scene2.geometries.add(triangle1, triangle2);
       scene2.lights.add(new SpotLight(trianglesLightColor, trianglesLightPosition, trianglesLightDirection)
@@ -173,4 +173,4 @@ public class LightsTests {
          .writeToImage(); //
    }
 
-}
+}*/

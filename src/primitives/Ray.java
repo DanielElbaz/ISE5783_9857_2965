@@ -66,7 +66,7 @@ public class Ray {
         GeoPoint result = null;
         double minDistance = Double.MAX_VALUE;
         for (GeoPoint geoPoint : points) {
-            double distance = geoPoint.point.distance(p0);
+            double distance = geoPoint.point.distanceSquared(p0);
             if (distance < minDistance) {
                 minDistance = distance;
                 result = geoPoint;

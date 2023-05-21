@@ -100,7 +100,7 @@ public class Polygon extends Geometry {
      * @return list of intersection points with the plane
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         List<Point> PIP = plane.findIntersections(ray); //PIP == Polygon Intersection Points
         if(PIP == null){
             return null;
@@ -130,6 +130,6 @@ public class Polygon extends Geometry {
                 return null;
             }
         }
-        return PIP;
+        return List.of(new GeoPoint(this, returnedP));
     }
 }

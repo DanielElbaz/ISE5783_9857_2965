@@ -26,18 +26,18 @@ public class Geometries extends Intersectable{
      * @return a list of intersection points of the ray with the geometry.
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         if(geometries.isEmpty()){
             return null;
         }
-        LinkedList<Point> results = null;
+        LinkedList<GeoPoint> results = null;
         for (Intersectable shape: // for each shape in the list of shapes
              geometries) {
-            if(shape.findIntersections(ray) != null){ // if the ray intersects the shape
+            if(shape.findGeoIntersectionsHelper(ray) != null){ // if the ray intersects the shape
                 if(results == null){ // if this is the first shape that the ray intersects
                     results = new LinkedList<>(); // create a new list of intersection points
                 }
-                results.addAll(shape.findIntersections(ray));
+                results.addAll(shape.findGeoIntersections(ray));
             }
         }
         if(results == null || results.isEmpty()){ // if the ray doesn't intersect any shape

@@ -33,7 +33,7 @@ public class Triangle extends Polygon {
             return null;
         }
 
-        GeoPoint returnedP = TIP.get(0);
+        Point returnedP = TIP.get(0).point;
 
         Point p1 = vertices.get(0);
         Point p2 = vertices.get(1); //p1, p2, p3 are the vertices of the triangle
@@ -60,7 +60,7 @@ public class Triangle extends Polygon {
         double check3 = alignZero(dir.dotProduct(n3));
 
         if((check1 < 0 && check2 < 0 && check3 < 0) || (check1 > 0 && check2 > 0 && check3 > 0)){
-            return TIP;
+            return List.of(new GeoPoint(this, returnedP));
         }
 
         return null;

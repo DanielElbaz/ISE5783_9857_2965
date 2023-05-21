@@ -50,10 +50,6 @@ public class Plane extends Geometry {
         return normal;
     }
 
-    @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-        return findGeoIntersectionsHelper(ray);
-    }
 
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) { // check if the ray is in the plane

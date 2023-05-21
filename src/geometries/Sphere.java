@@ -33,7 +33,7 @@ public class Sphere extends RadialGeometry{
         Point p0 = ray.getP0(); // the origin of the ray
         Vector dir = ray.getDir();
         if(p0.equals(center)){
-            return List.of(new GeoPoint(this,p0)); // the ray starts at the center of the sphere
+            return List.of(new GeoPoint(this,ray.getPoint(radius))); // the ray starts at the center of the sphere
         }
         Vector U = center.subtract(p0); // the vector from the origin of the ray to the center of the sphere
         double tm = U.dotProduct(dir); // the length of the projection of U on the ray
