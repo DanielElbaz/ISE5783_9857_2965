@@ -12,7 +12,7 @@ import static primitives.Util.isZero;
 /**
  * The Plane class represents a plane in a 3D space.
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     private final Point q0;
     private final Vector normal;
 
@@ -49,12 +49,14 @@ public class Plane implements Geometry {
     public Vector getNormal() {
         return normal;
     }
+
     @Override
-    /**
-     * @param ray the ray to find the intersections with the plane
-     * @return a list of the intersection points of the specified ray with the plane.
-     */
-    public List<Point> findIntersections(Ray ray) { // check if the ray is in the plane
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersectionsHelper(ray);
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) { // check if the ray is in the plane
         Vector dir = ray.getDir();
         double nv = normal.dotProduct(dir);
         if(isZero(nv)) {
@@ -66,7 +68,7 @@ public class Plane implements Geometry {
         double t = alignZero(NQminP0/nv); // check if t is negative
         if(t > 0){
             Point intersectionPoint = ray.getPoint(t); //check if the point is on the plane
-            return List.of(intersectionPoint);
+            return List.of(new GeoPoint(this,intersectionPoint));
         }
         else { // t <= 0
             return null;

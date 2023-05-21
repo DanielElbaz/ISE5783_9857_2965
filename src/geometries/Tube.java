@@ -68,15 +68,14 @@ public class Tube extends RadialGeometry {
             return vec.normalize();
         if (p.equals(o))
             throw new IllegalArgumentException("point cannot be on the tube axis");
-        Vector res = p.subtract(o).normalize();
-        return res;
+        return p.subtract(o).normalize();
 
 
     }
 
     /**
-     * @param ray
-     * @return
+     * @param ray the ray that we want to find the intersections with
+     * @return list of intersection points
      */
     @Override
     public List<Point> findIntersections(Ray ray) {

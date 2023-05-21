@@ -17,7 +17,7 @@ import primitives.Vector;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -100,10 +100,6 @@ public class Polygon implements Geometry {
      * @return list of intersection points with the plane
      */
     @Override
-    /**
-     * @param ray
-     * @return list of intersection points
-     */
     public List<Point> findIntersections(Ray ray) {
         List<Point> PIP = plane.findIntersections(ray); //PIP == Polygon Intersection Points
         if(PIP == null){

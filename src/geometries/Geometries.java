@@ -6,7 +6,7 @@ import primitives.Ray;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Geometries implements Intersectable{
+public class Geometries extends Intersectable{
     private List<Intersectable> geometries;
 
     public Geometries() {
@@ -25,6 +25,7 @@ public class Geometries implements Intersectable{
      * @param ray the ray with which the intersection is checked.
      * @return a list of intersection points of the ray with the geometry.
      */
+    @Override
     public List<Point> findIntersections(Ray ray) {
         if(geometries.isEmpty()){
             return null;

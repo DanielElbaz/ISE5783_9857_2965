@@ -1,6 +1,8 @@
 package primitives;
 import java.util.List;
 import java.util.Objects;
+import geometries.Intersectable.GeoPoint;
+
 
 public class Ray {
     final private Point p0;
@@ -54,20 +56,23 @@ public class Ray {
      * @param points;
      * @return the closest point to the camera
      */
-    public Point findClosestPoint(List<Point> points){
-        if(points.isEmpty()){return null;}
+    public Point findClosestPoint(List<Point> points) {
+        return points == null || points.isEmpty() ? null
+                : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
+    }
 
-        Point closest = null;
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
+        if (points == null || points.isEmpty()) return null;
+        GeoPoint result = null;
         double minDistance = Double.MAX_VALUE;
-
-        for (Point point:points) {
-            double distance = p0.distanceSquared(point);
-            if(distance < minDistance){
+        for (GeoPoint geoPoint : points) {
+            double distance = geoPoint.point.distance(p0);
+            if (distance < minDistance) {
                 minDistance = distance;
-                closest = point;
+                result = geoPoint;
             }
         }
-        return closest;
+        return result;
     }
 }
 

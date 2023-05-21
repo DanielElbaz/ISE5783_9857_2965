@@ -29,16 +29,11 @@ public class Sphere extends RadialGeometry{
         return v.normalize();
     }
     @Override
-    /**
-     * Returns a list of the intersection points of the specified ray with the sphere.
-     * @param ray the ray to find the intersections with the sphere.
-     * @return a list of the intersection points of the specified ray with the sphere.
-     */
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0(); // the origin of the ray
         Vector dir = ray.getDir();
         if(p0.equals(center)){
-            return List.of(ray.getPoint(radius)); // the ray starts at the center of the sphere
+            return List.of(new GeoPoint(this,p0)); // the ray starts at the center of the sphere
         }
         Vector U = center.subtract(p0); // the vector from the origin of the ray to the center of the sphere
         double tm = U.dotProduct(dir); // the length of the projection of U on the ray
@@ -52,10 +47,10 @@ public class Sphere extends RadialGeometry{
         if(alignZero(t2) <= 0){ // the ray starts after the sphere
             return null;
         } else if(alignZero(t1) > 0){ // the ray starts before the sphere
-            return List.of(ray.getPoint(t1),ray.getPoint(t2)); // the ray starts before the sphere and ends after the sphere
+            return List.of(new GeoPoint(this, ray.getPoint(t1)),new GeoPoint(this, ray.getPoint(t2))); // the ray starts before the sphere and ends after the sphere
         }
         else { // the ray starts inside the sphere
-            return List.of(ray.getPoint(t2));
+            return List.of(new GeoPoint(this, ray.getPoint(t2)));
         }
     }
 }

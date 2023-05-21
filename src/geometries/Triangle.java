@@ -25,20 +25,15 @@ public class Triangle extends Polygon {
         super(p1, p2, p3);
     }
     @Override
-    /**
-     Returns the normal to the triangle at the specified point.
-     @param p the point to calculate the normal at.
-     @return the normal vector to the triangle at the specified point.
-     */
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         //TIP == Triangle Intersection Points
-        List<Point> TIP = plane.findIntersections(ray);
+        List<GeoPoint> TIP = plane.findGeoIntersectionsHelper(ray);
 
         if(TIP == null){
             return null;
         }
 
-        Point returnedP = TIP.get(0);
+        GeoPoint returnedP = TIP.get(0);
 
         Point p1 = vertices.get(0);
         Point p2 = vertices.get(1); //p1, p2, p3 are the vertices of the triangle
