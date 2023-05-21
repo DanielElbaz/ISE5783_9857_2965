@@ -49,6 +49,11 @@ public class Ray {
         return p0.add(dir.scale(t));
     }
 
+    /**
+     *
+     * @param points;
+     * @return the closest point to the camera
+     */
     public Point findClosestPoint(List<Point> points){
         if(points.isEmpty()){return null;}
 

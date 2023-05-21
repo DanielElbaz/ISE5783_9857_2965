@@ -1,5 +1,7 @@
 package primitives;
 
+import static java.lang.Math.abs;
+
 public class Vector extends Point {
 
     /**
@@ -118,15 +120,22 @@ public class Vector extends Point {
                 xyz.d3*alpha);
     }
 
+    /**
+     * @param axis;
+     * @param rad;
+     * @return new vector that is the rotation of this vector by rad around the axis;
+     */
     public Vector rotate(double rad, Vector axis) {
         //rad = rad%(2*(Math.PI));
 
-        if (rad == Math.PI/4 || rad == 3*Math.PI/4){
-            return this.scale(Math.sin(rad));
-        } else if (rad == 0 || rad == Math.PI) {
-            return axis.scale(Math.cos(rad));
+        if (abs(rad) == Math.PI/2 || abs(rad) == 3*Math.PI/2){ // 90 or 270 degrees
+            return axis.scale(Math.sin(rad)); // sin(90) = 1, sin(270) = -1
+        } else if (abs(rad) == 0 || abs(rad) == Math.PI) { // 0 or 180 degrees
+            return this.scale(Math.cos(rad)); // cos(0) = 1, cos(180) = -1
         }
 
+        // to rotate the vector we create plane with the vector and the axis, and rotate the vector in the plane
+        // do to that our vector is orthogonal to the axis, we 
         Vector V1 = this.scale(Math.cos(rad));
         Vector V2 = axis.scale(Math.sin(rad));
         return V1.add(V2);

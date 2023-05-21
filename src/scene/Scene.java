@@ -4,6 +4,10 @@ import geometries.Geometries;
 import lighting.AmbientLight;
 import primitives.Color;
 
+/**
+ * class Scene is a class that represents the scene
+ * it has a name, a background, an ambient light and a geometries
+ */
 public class Scene {
     public String name;
     public Color background = Color.BLACK;

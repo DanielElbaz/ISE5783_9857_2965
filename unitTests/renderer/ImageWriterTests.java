@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
-
+/**
+ * Testing Camera Class
+ *
+ */
 public class ImageWriterTests {
 
     @Test
