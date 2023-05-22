@@ -109,7 +109,7 @@ public class Camera {
      * Renders the image using the camera settings.
      * Throws a MissingResourceException if any required field is empty.
      */
-    public void renderImage() {
+    public Camera renderImage() {
         if (this.place == null ||
                 this.vTo == null ||
                 this.vUp == null ||
@@ -129,6 +129,7 @@ public class Camera {
                 imageWriter.writePixel(i, j, pixColor);
             }
         }
+        return this;
     }
 
     /**

@@ -4,15 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e08e8dc7-072f-4d7d-8a5f-fe1e66a2c6c1" name="Changes" comment="stage 6 part a">
-      <change afterPath="$PROJECT_DIR$/images/color render test.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lighting/DirectionalLight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lighting/Light.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lighting/LightSource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lighting/PointLight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lighting/SpotLight.java" afterDir="false" />
+    <list default="true" id="e08e8dc7-072f-4d7d-8a5f-fe1e66a2c6c1" name="Changes" comment="stage 6 part a++">
+      <change afterPath="$PROJECT_DIR$/images/lightSphereSpot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/lightSphereSpotSharp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/lightTrianglesDirectional.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/lightTrianglesPoint.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/lightTrianglesSpot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/lightTrianglesSpotSharp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/primitives/Material.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lighting/AmbientLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lighting/AmbientLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/geometries/Geometry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/Geometry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lighting/SpotLight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lighting/SpotLight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scene/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scene/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitTests/renderer/LightsTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/LightsTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,15 +105,7 @@
       <recent name="geometries" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.RenderTests">
-    <configuration name="All in ISE5783_9857_2965" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ISE5783_9857_2965" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.LightsTests">
     <configuration name="ImageWriterTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_9857_2965" />
       <extension name="coverage">
@@ -118,6 +116,21 @@
       </extension>
       <option name="PACKAGE_NAME" value="renderer" />
       <option name="MAIN_CLASS_NAME" value="renderer.ImageWriterTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LightsTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ISE5783_9857_2965" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="renderer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="renderer" />
+      <option name="MAIN_CLASS_NAME" value="renderer.LightsTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -170,11 +183,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LightsTests" />
         <item itemvalue="JUnit.RenderTests" />
         <item itemvalue="JUnit.ImageWriterTests" />
         <item itemvalue="JUnit.RayTest" />
         <item itemvalue="JUnit.PlaneTests" />
-        <item itemvalue="JUnit.All in ISE5783_9857_2965" />
       </list>
     </recent_temporary>
   </component>
@@ -306,7 +319,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1684704112011</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL‎-00018" summary="stage 6 part a++">
+      <created>1684750642050</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL‎-00018" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1684750642050</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -332,7 +352,8 @@
     <MESSAGE value="End Stage 4" />
     <MESSAGE value="Tag stage5" />
     <MESSAGE value="stage 6 part a" />
-    <option name="LAST_COMMIT_MESSAGE" value="stage 6 part a" />
+    <MESSAGE value="stage 6 part a++" />
+    <option name="LAST_COMMIT_MESSAGE" value="stage 6 part a++" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
