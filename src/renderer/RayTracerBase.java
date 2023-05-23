@@ -11,6 +11,10 @@ import scene.Scene;
 public abstract class RayTracerBase {
     protected Scene scene;
 
+    /**
+     * constructor for RayTracerBase
+     * @param scene the scene
+     */
     public RayTracerBase(Scene scene) {
         this.scene = scene;
     }

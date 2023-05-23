@@ -41,6 +41,11 @@ public class RayTracerBasic extends RayTracerBase{
         return scene.ambientLight.getIntensity().add(calcLocalEffects(p, ray));
     }
 
+    /**
+     * @param p the point
+     * @param ray the ray from the camera to the scene
+     * @return the color of the point
+     */
     private Color calcLocalEffects(GeoPoint p, Ray ray) {
         Color color = p.geometry.getEmission();
         Vector v = ray.getDir ();
@@ -61,12 +66,25 @@ public class RayTracerBasic extends RayTracerBase{
         return color;
     }
 
+    /**
+     * @param material the material of the geometry
+     * @param n the normal of the geometry
+     * @param l the vector from the light to the geometry
+     * @param nl the dot product of n and l
+     * @param v the vector from the camera to the geometry
+     * @return the specular color
+     */
     private Double3 calcSpecular(Material material, Vector n, Vector l, double nl, Vector v) {
         Vector r = l.subtract(n.scale(2*nl));
         double maxInPow = Math.pow(Math.max(0, alignZero(v.scale(-1).dotProduct(r))), material.nShininess);
         return material.kS.scale(maxInPow);
     }
 
+    /**
+     * @param mat the material of the geometry
+     * @param nl the dot product of n and l
+     * @return the diffusive color
+     */
     private Double3 calcDiffusive(Material mat, double nl){
         return mat.kD.scale(Math.abs(nl));
     }

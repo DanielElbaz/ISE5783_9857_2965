@@ -52,7 +52,10 @@ public class LightsTests {
         new Point(-75, 78, 100)
       };
    private final Point          sphereLightPosition     = new Point(-50, -50, 25);
+   private final Point          sphereLightPosition2     = new Point(115, 30, -25);
+
    private final Point          trianglesLightPosition  = new Point(30, 10, -100);
+   private final Point          trianglesLightPosition2  = new Point(-87, 10, 100);
    private final Vector         trianglesLightDirection = new Vector(-2, -2, -2);
 
    private final Geometry       sphere                  = new Sphere(SPHERE_RADIUS, sphereCenter)
@@ -171,6 +174,34 @@ public class LightsTests {
          .setRayTracer(new RayTracerBasic(scene2)) //
          .renderImage() //
          .writeToImage(); //
+   }
+   @Test
+   public void amazingSphere(){
+        scene1.geometries.add(sphere);
+        scene1.lights.add(new SpotLight(sphereLightColor, sphereLightPosition, new Vector(1, 1, -0.5))
+                .setNarrowBeam(10).setkL(0.001).setkQ(0.00004));
+        scene1.lights.add(new DirectionalLight(sphereLightColor, new Vector(1, 1, -0.5)));
+        scene1.lights.add(new PointLight(sphereLightColor, sphereLightPosition2)
+                .setkL(0.001).setkQ(0.0002));
+        ImageWriter imageWriter = new ImageWriter("amazingSphere", 500, 500);
+        camera1.setImageWriter(imageWriter) //
+                .setRayTracer(new RayTracerBasic(scene1)) //
+                .renderImage() //
+                .writeToImage(); //
+   }
+   @Test
+   public void amazingTriangle(){
+        scene2.geometries.add(triangle1, triangle2);
+        scene2.lights.add(new SpotLight(trianglesLightColor, trianglesLightPosition, trianglesLightDirection)
+                .setNarrowBeam(10).setkL(0.001).setkQ(0.00004));
+        scene2.lights.add(new DirectionalLight(trianglesLightColor, trianglesLightDirection));
+        scene2.lights.add(new PointLight(trianglesLightColor, trianglesLightPosition2)
+                .setkL(0.001).setkQ(0.0002));
+        ImageWriter imageWriter = new ImageWriter("amazingTriangle", 500, 500);
+        camera2.setImageWriter(imageWriter) //
+                .setRayTracer(new RayTracerBasic(scene2)) //
+                .renderImage() //
+                .writeToImage(); //
    }
 
 }
