@@ -24,22 +24,23 @@ public class Plane extends Geometry {
         this.q0 = q0;
         this.normal = normal;
     }
+
     /**
      * Constructor for Plane
+     *
      * @param p1;
      * @param p2;
-     * @param p3;
-     * 3 points that the plane will be constructed from
+     * @param p3; 3 points that the plane will be constructed from
      */
     public Plane(Point p1, Point p2, Point p3) {
         this.q0 = p1;
-        Vector q2=p2.subtract(p1);
-        Vector q3=p3.subtract(p1);
-       try{
-           this.normal = q2.crossProduct(q3).normalize();
-                  } catch (IllegalArgumentException e){
-           throw new IllegalArgumentException("The points are on the same line");
-       }
+        Vector q2 = p2.subtract(p1);
+        Vector q3 = p3.subtract(p1);
+        try {
+            this.normal = q2.crossProduct(q3).normalize();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("The points are on the same line");
+        }
     }
 
     public Vector getNormal(Point p) {
@@ -52,21 +53,20 @@ public class Plane extends Geometry {
 
 
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) { // check if the ray is in the plane
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) { // check if the ray is in the plane
         Vector dir = ray.getDir();
         double nv = normal.dotProduct(dir);
-        if(isZero(nv)) {
+        if (isZero(nv)) {
             return null;
         }
 
         Point p0 = ray.getP0();
         double NQminP0 = normal.dotProduct(q0.subtract(p0));
-        double t = alignZero(NQminP0/nv); // check if t is negative
-        if(t > 0){
+        double t = alignZero(NQminP0 / nv); // check if t is negative
+        if (t > 0) {
             Point intersectionPoint = ray.getPoint(t); //check if the point is on the plane
-            return List.of(new GeoPoint(this,intersectionPoint));
-        }
-        else { // t <= 0
+            return intersectionPoint.distanceSquared(p0) < maxDistance ? List.of(new GeoPoint(this, intersectionPoint)) : null;
+        } else { // t <= 0
             return null;
         }
     }

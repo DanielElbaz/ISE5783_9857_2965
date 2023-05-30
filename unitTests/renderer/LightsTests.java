@@ -33,7 +33,9 @@ public class LightsTests {
 
    private final Material       material                = new Material().setkD(KD3).setkS(KS3).setShininess(SHININESS);
    private final Color          trianglesLightColor     = new Color(800, 500, 250);
+
    private final Color          sphereLightColor        = new Color(800, 500, 0);
+
    private final Color          sphereColor             = new Color(BLUE).reduce(2);
 
    private final Point          sphereCenter            = new Point(0, 0, -50);
@@ -60,6 +62,7 @@ public class LightsTests {
 
    private final Geometry       sphere                  = new Sphere(SPHERE_RADIUS, sphereCenter)
       .setEmission(sphereColor).setMaterial(new Material().setkD(KD).setkS(KS).setShininess(SHININESS));
+
    private final Geometry       triangle1               = new Triangle(vertices[0], vertices[1], vertices[2])
       .setMaterial(material);
    private final Geometry       triangle2               = new Triangle(vertices[0], vertices[1], vertices[3])

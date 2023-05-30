@@ -117,7 +117,7 @@ public class Tube extends RadialGeometry {
         return List.of(p0.add(v.scale(t1)),p0.add(v.scale(t2)));
     }
 
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance){
         return null;
     }
 }

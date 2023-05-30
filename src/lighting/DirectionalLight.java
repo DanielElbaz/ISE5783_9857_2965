@@ -38,4 +38,9 @@ public class DirectionalLight extends Light implements LightSource{
     public Vector getL(Point p) {
         return this.direction;
     }
+
+    @Override
+    public double getDistanceSquared(Point point) {
+        return Double.POSITIVE_INFINITY;
+    }
 }

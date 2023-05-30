@@ -25,9 +25,9 @@ public class Triangle extends Polygon {
         super(p1, p2, p3);
     }
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         //TIP == Triangle Intersection Points
-        List<GeoPoint> TIP = plane.findGeoIntersectionsHelper(ray);
+        List<GeoPoint> TIP = plane.findGeoIntersectionsHelper(ray,maxDistance);
 
         if(TIP == null){
             return null;
@@ -60,7 +60,7 @@ public class Triangle extends Polygon {
         double check3 = alignZero(dir.dotProduct(n3));
 
         if((check1 < 0 && check2 < 0 && check3 < 0) || (check1 > 0 && check2 > 0 && check3 > 0)){
-            return List.of(new GeoPoint(this, returnedP));
+            return returnedP.distanceSquared(p0)<maxDistance ? List.of(new GeoPoint(this, returnedP)) : null;
         }
 
         return null;

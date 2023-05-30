@@ -50,11 +50,19 @@ public abstract class Intersectable { // interface for all the geometries that c
         }
     }
 
-
+    /**
+     *
+     * @param ray the ray we create
+     * @param maxDistance the distance
+     * @return helper function
+     */
+    public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance){
+        return findGeoIntersectionsHelper(ray,maxDistance);
+    }
     public List<GeoPoint> findGeoIntersections(Ray ray){
-        return findGeoIntersectionsHelper(ray);
+        return findGeoIntersections(ray,Double.POSITIVE_INFINITY);
     }
 
-    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance);
 }
 
