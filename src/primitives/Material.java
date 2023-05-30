@@ -3,6 +3,8 @@ package primitives;
 public class Material {
     public Double3 kD  = new Double3(0);
     public Double3 kS = new Double3(0);
+    public Double3 kT = new Double3(0);
+    public Double3 kR = new Double3(0);
     public int nShininess = 0;
 
     /**
@@ -45,4 +47,37 @@ public class Material {
         this.nShininess = nShininess;
         return this;
     }
+
+    /**
+     *
+     * @param kT refraction
+     */
+    public void setkT(Double3 kT) {
+        this.kT = kT;
+    }
+    /**
+     *
+     * @param kR reflection
+     */
+    public void setkR(Double3 kR) {
+        this.kR = kR;
+    }
+
+
+    /**
+     *
+     * @param kR reflection
+     */
+    public void setkR(double kR) {
+        this.kR = new Double3(kR) ;
+    }
+    /**
+     *
+     * @param kT refraction
+     */
+    public void setkT(double kT) {
+        this.kT = new Double3(kT);
+    }
+
+
 }
