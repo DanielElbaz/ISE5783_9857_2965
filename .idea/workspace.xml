@@ -163,8 +163,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.LightsTests" />
         <item itemvalue="JUnit.All in ISE5783_9857_2965" />
+        <item itemvalue="JUnit.LightsTests" />
         <item itemvalue="JUnit.RenderTests" />
         <item itemvalue="JUnit.ImageWriterTests" />
         <item itemvalue="JUnit.RayTest" />
@@ -355,7 +355,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1685462682450</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL‎-00026" summary="start PR07.2">
+      <created>1686037595462</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL‎-00026" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1686037595462</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
