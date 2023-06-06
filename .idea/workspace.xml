@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e08e8dc7-072f-4d7d-8a5f-fe1e66a2c6c1" name="Changes" comment="PR07.1">
+      <change afterPath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/primitives/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/primitives/Material.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/primitives/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/primitives/Ray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,8 +82,8 @@
       <recent name="primitive" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\unitTests\renderer" />
       <recent name="C:\Users\אפי\Desktop\לימודים\ISE5783_9857_2965\unitTests\renderer" />
+      <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\unitTests\renderer" />
       <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\src\renderer" />
       <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\src\primitives" />
       <recent name="C:\Users\danie\IdeaProjects\ISE5783_9857_2965\unitTests\geometries" />
@@ -92,26 +96,11 @@
       <recent name="geometries" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.ReflectionRefractionTests">
     <configuration name="All in ISE5783_9857_2965" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_9857_2965" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ImageWriterTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ISE5783_9857_2965" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="renderer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="renderer" />
-      <option name="MAIN_CLASS_NAME" value="renderer.ImageWriterTests" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -131,16 +120,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RayTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ReflectionRefractionTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5783_9857_2965" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="primitives.*" />
+          <option name="PATTERN" value="renderer.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="primitives" />
-      <option name="MAIN_CLASS_NAME" value="primitives.RayTest" />
+      <option name="PACKAGE_NAME" value="renderer" />
+      <option name="MAIN_CLASS_NAME" value="renderer.ReflectionRefractionTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -161,13 +150,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ShadowTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ISE5783_9857_2965" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="renderer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="renderer" />
+      <option name="MAIN_CLASS_NAME" value="renderer.ShadowTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ReflectionRefractionTests" />
+        <item itemvalue="JUnit.ShadowTests" />
         <item itemvalue="JUnit.LightsTests" />
         <item itemvalue="JUnit.All in ISE5783_9857_2965" />
         <item itemvalue="JUnit.RenderTests" />
-        <item itemvalue="JUnit.ImageWriterTests" />
-        <item itemvalue="JUnit.RayTest" />
       </list>
     </recent_temporary>
   </component>
