@@ -57,6 +57,20 @@ public class Camera {
         this.vRight = vTo.crossProduct(vUp).normalize();
     }
 
+    public Camera(Point place){
+        this(place, new Vector(-1, 0, 0), new Vector(0, 0, 1));
+    }
+    public Camera Turn_right(double alpha){
+        this.vRight= this.vRight.rotate(alpha, this.vTo.scale(-1));
+        this.vTo=this.vUp.crossProduct(vRight);
+        return this;
+    }
+    public Camera Turn_up(double alpha){
+        this.vUp= this.vUp.rotate(alpha, this.vTo);
+        this.vTo=this.vUp.crossProduct(vRight);
+        return this;
+    }
+
     public Camera setVPSize(double width, double height) {
         this.width = width;
         this.height = height;
@@ -200,4 +214,5 @@ public class Camera {
         Vector rotVup = vUp.rotate(rad, vRight.scale(-1));
         return new Camera(place, vTo, rotVup);
     }
+
 }

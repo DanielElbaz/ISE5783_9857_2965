@@ -9,116 +9,132 @@ import java.util.List;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
-/**
+public class Tube extends Geometry{
+    protected   final Ray axisRay;
+    protected final double radius;
 
- The Tube class extends RadialGeometry and represents a tube in a 3D space.
- */
-public class Tube extends RadialGeometry {
-
-    /**
-
-     The axis ray of the tube.
-     */
-    protected final Ray axisRay;
-    /**
-
-     Constructs a new Tube object with the specified axis ray.
-     @param axisRay the axis ray of the tube.
-     */
-    public Tube(double radius, Ray axisRay) {
-        super(radius);
+    public Tube(Ray axisRay, double radius) {
         this.axisRay = axisRay;
+        this.radius = radius;
     }
 
-    /**
-
-     Returns the axis ray of the tube.
-     @return the axis ray of the tube.
-     */
     public Ray getAxisRay() {
         return axisRay;
     }
-    /**
 
-     Returns the normal to the tube at the specified point.
-     @param p the point to calculate the normal at.
-     @return the normal vector to the tube at the specified point.
-     */
-    public Vector getNormal(Point p) {
-        // Finding the normal:
-        // n = normalize(p - o)
-        // t = v * (p - p0)
-        // o = p0 + t * v
+    public double getRadius() {
+        return radius;
+    }
 
-        Vector v= axisRay.getDir();
-        Point p0 =axisRay.getP0();
+    @Override
+    public Vector getNormal(Point point) {
+        //TODO
+        Point P0 = axisRay.getP0();
+        Vector v = axisRay.getDir();
 
-        Vector vec = p.subtract(p0);
-        double t = v.dotProduct(vec);
-        t = alignZero(t);
+        Vector P0_P = point.subtract(P0);
 
-        //if t=0, then t*v is the zero vector and o=p0.
-        Point o=p0;
+        double t = alignZero(v.dotProduct(P0_P));
 
-        if(!isZero(t))
-        {
-            o = p0.add(v.scale(t));
+        if (isZero(t)) {
+            return P0_P.normalize();
         }
-        else
-            return vec.normalize();
-        if (p.equals(o))
+
+        Point o = P0.add(v.scale(t));
+
+        if (point.equals(o)) {
             throw new IllegalArgumentException("point cannot be on the tube axis");
-        return p.subtract(o).normalize();
+        }
 
+        Vector n = point.subtract(o).normalize();
 
+        return n;
     }
 
     /**
-     * @param ray the ray that we want to find the intersections with
-     * @return list of intersection points
+     * @param ray         the ray crossing the geometric object
+     * @param maxDistance max distance for finding intersections
+     * @return List of intersection points
+     * @author Dan
+     * {@see <a href="https://mrl.cs.nyu.edu/~dzorin/rendering/lectures/lecture3/lecture3.pdf"></a>}
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        /** explanation:
-         *  a general tube equation is: (q-p0-(v,q-p0)v)^2-r^2=0
-         *  while q is general point on the tube, p0 the central point and v the direction vector
-         *  in our case - q belongs the ray, so we can substitute it with q0+tu
-         *  while q0 is the point the ray starts from, and u the ray direction
-         *  our equation now is((u-(u,v)v)t+(q0-p0-(q0-p0,v)v))^2-r^2
-         *                     ((   a    )t+(       b        ))^2
-         *  all we need is to find the 't'
-         *  after arranging the equation we'll get quadratic equation At^2+Bt+c=0
-         *  while: A = (u-(u,v)v)^2
-         *         B = 2(u-(u,v)v,q0-p0-(q0-p0,v)v)
-         *         C = (q0-p0-(q0-p0,v)v)^2-r^2
-         */
-        Point q0 = ray.getP0();
-        Vector u = ray.getDir();
-        Point p0 = axisRay.getP0();
-        Vector v = axisRay.getDir();
-        Vector a = u.add(v.scale(((u.dotProduct(v))*-1)));
-        Vector b = (q0.subtract(p0)).subtract(v.scale((q0.subtract(p0)).dotProduct(v)));
-        double A = a.dotProduct(a);
-        double B = 2*a.dotProduct(b);
-        double C = b.dotProduct(b) - (radius*radius);
-        double discriminant = (B*B)-4*(A*C);
-        if(discriminant <= 0){
-            return null;
-        }
-        double SQRTdiscriminant = Math.sqrt(discriminant);
-        double t1 = ((-1*B)-SQRTdiscriminant)/(2*A);
-        double t2 = ((-1*B)+SQRTdiscriminant)/(2*A);
-        if(t2<=0){
-            return null;
-        }
-        if(t1<=0){
-            return List.of(p0.add(v.scale(t2)));
-        }
-        return List.of(p0.add(v.scale(t1)),p0.add(v.scale(t2)));
-    }
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        Vector vAxis = axisRay.getDir();
+        Vector v = ray.getDir();
+        Point p0 = ray.getP0();
 
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance){
+        // At^2+Bt+C=0
+        double a = 0;
+        double b = 0;
+        double c = 0;
+
+        double vVa = alignZero(v.dotProduct(vAxis));
+        Vector vVaVa;
+        Vector vMinusVVaVa;
+        if (vVa == 0) // the ray is orthogonal to the axis
+            vMinusVVaVa = v;
+        else {
+            vVaVa = vAxis.scale(vVa);
+            try {
+                vMinusVVaVa = v.subtract(vVaVa);
+            } catch (IllegalArgumentException e1) { // the rays is parallel to axis
+                return null;
+            }
+        }
+        // A = (v-(v*va)*va)^2
+        a = vMinusVVaVa.lengthSquared();
+
+        Vector deltaP = null;
+        try {
+            deltaP = p0.subtract(axisRay.getP0());
+        } catch (IllegalArgumentException e1) { // the ray begins at axis P0
+            if (vVa == 0 && alignZero(radius - maxDistance) <= 0) { // the ray is orthogonal to Axis
+                return List.of(new GeoPoint(this, ray.getPoint(radius)));
+            }
+            double t = alignZero(Math.sqrt(radius * radius / vMinusVVaVa.lengthSquared()));
+            return alignZero(t - maxDistance) >= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
+        }
+
+        double dPVAxis = alignZero(deltaP.dotProduct(vAxis));
+        Vector dPVaVa;
+        Vector dPMinusdPVaVa;
+        if (dPVAxis == 0)
+            dPMinusdPVaVa = deltaP;
+        else {
+            dPVaVa = vAxis.scale(dPVAxis);
+            try {
+                dPMinusdPVaVa = deltaP.subtract(dPVaVa);
+            } catch (IllegalArgumentException e1) {
+                double t = alignZero(Math.sqrt(radius * radius / a));
+                return alignZero(t - maxDistance) >= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
+            }
+        }
+
+        // B = 2(v - (v*va)*va) * (dp - (dp*va)*va))
+        b = 2 * alignZero(vMinusVVaVa.dotProduct(dPMinusdPVaVa));
+        c = dPMinusdPVaVa.lengthSquared() - radius * radius;
+
+        // A*t^2 + B*t + C = 0 - lets resolve it
+        double discr = alignZero(b * b - 4 * a * c);
+        if (discr <= 0) return null; // the ray is outside or tangent to the tube
+
+        double doubleA = 2 * a;
+        double tm = alignZero(-b / doubleA);
+        double th = Math.sqrt(discr) / doubleA;
+        if (isZero(th)) return null; // the ray is tangent to the tube
+
+        double t1 = alignZero(tm + th);
+        if (t1 <= 0) // t1 is behind the head
+            return null; // since th must be positive (sqrt), t2 must be non-positive as t1
+
+        double t2 = alignZero(tm - th);
+
+        // if both t1 and t2 are positive
+        if (t2 > 0 && alignZero(t2 - maxDistance) < 0)
+            return List.of(new GeoPoint(this, ray.getPoint(t1)),new GeoPoint(this, ray.getPoint(t2)));
+        else if (alignZero(t1 - maxDistance) < 0)// t2 is behind the head
+            return List.of(new GeoPoint(this, ray.getPoint(t1)));
         return null;
     }
 }
-

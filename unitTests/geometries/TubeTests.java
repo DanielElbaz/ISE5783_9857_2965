@@ -14,7 +14,7 @@ class TubeTests {
 
     @Test
     void testGetNormal() {
-        Tube tube = new Tube(1, new Ray(new Point(0, 0, 0), new Vector(1, 0, 0)));
+        Tube tube = new Tube(new Ray(new Point(0, 0, 0), new Vector(1, 0, 0)), 1);
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: tests for calculation of normal to the tube
@@ -30,8 +30,8 @@ class TubeTests {
     @Test
     @Disabled
     public void testFindIntersections() {
-        Tube tube = new Tube(1,new Ray(new Point(1,0,0),
-                new Vector(0,0,1)));
+        Tube tube = new Tube(new Ray(new Point(1,0,0),
+                        new Vector(0,0,1)), 1);
         // ============ Equivalence Partitions Tests ==============
         // TC01: Ray's line is outside the tube (0 points)
         assertNull(tube.findIntersections(new Ray(new Point(3,2,0),

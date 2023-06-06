@@ -100,36 +100,46 @@ public class Polygon extends Geometry {
      * @return list of intersection points with the plane
      */
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
-        List<Point> PIP = plane.findIntersections(ray); //PIP == Polygon Intersection Points
-        if(PIP == null){
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
+
+        if (planeIntersections == null) {
             return null;
         }
-        Point returnedP = PIP.get(0); //returnedP == returned Point from the plane intersection
-        for (Point ver: vertices) { //check if the returned point is one of the vertices
-            if(ver.equals(returnedP)){
-                return null;
-            }
-        }
-        Point p0 = ray.getP0(); // Get the origin of the ray
-        LinkedList<Vector> Vi = new LinkedList<>();
-        for (Point ver: vertices) { // Get the vectors from the origin to the vertices
-            Vi.add(ver.subtract(p0));
+
+        Point P0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        Point P1 = vertices.get(1);
+        Point P2 = vertices.get(0);
+
+        Vector v1 = P0.subtract(P1);
+        Vector v2 = P0.subtract(P2);
+
+        double sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+
+        if (isZero(sign)) {
+            return null;
         }
 
-        Vector dir = ray.getDir();
-        LinkedList<Vector> Ni = new LinkedList<>();
-        for (int i = 0; i < Vi.size() - 2; i++) { //
-            Ni.add(Vi.get(i).crossProduct(Vi.get(i+1)).normalize());
-        }
-        Ni.add(Vi.get(Vi.size() - 1).crossProduct(Vi.get(0)).normalize()); // Add the last vector
-        double check = dir.dotProduct(Ni.get(0));
-        for (Vector Nj: Ni) { // Check if there is a change in the sign of the dot product
-            double tempCheck = dir.dotProduct(Nj);
-            if(alignZero(check*tempCheck) <= 0){ // If there is a change in the sign of the dot product
+        boolean positive = sign > 0;
+
+        //iterate through all vertices of the polygon
+        for (int i = vertices.size() - 1; i > 0; --i) {
+            v1 = v2;
+            v2 = P0.subtract(vertices.get(i));
+
+            sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign)) {
+                return null;
+            }
+
+            if (positive != (sign > 0)) {
                 return null;
             }
         }
-        return returnedP.distanceSquared(p0)<maxDistance ? List.of(new GeoPoint(this, returnedP)) : null;
+        Point point = planeIntersections.get(0).point;
+
+        return point.distanceSquared(P0)< maxDistance? List.of(new GeoPoint(this,point)) : null;
     }
 }
