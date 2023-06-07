@@ -125,6 +125,27 @@ public class ReflectionRefractionTests {
                 new Sphere(30, new Point(250,-566,280))
                         .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
                         .setEmission(new Color(184,134,11)),
+                new Sphere(30, new Point(330,-375,900))
+                        .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
+                        .setEmission(new Color(184,134,11)),
+                new Sphere(30, new Point(330,-370,800))
+                        .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
+                        .setEmission(new Color(184,134,11)),
+                new Sphere(30, new Point(330,-366,720))
+                        .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
+                        .setEmission(new Color(184,134,11)),
+                new Sphere(30, new Point(330,-361.5,630))
+                        .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
+                        .setEmission(new Color(184,134,11)),
+                new Sphere(30, new Point(330,-357,540))
+                        .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
+                        .setEmission(new Color(184,134,11)),
+                new Sphere(30, new Point(330,-352.5,450))
+                        .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
+                        .setEmission(new Color(184,134,11)),
+                new Sphere(30, new Point(330,-348,360))
+                        .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
+                        .setEmission(new Color(184,134,11)),
                 new Triangle(new Point(816,0,250),
                         new Point(250,566,250),
                         new Point(250,0,0))
@@ -201,5 +222,45 @@ public class ReflectionRefractionTests {
                 .setRayTracer(new RayTracerBasic(scene)) //
                 .renderImage() //
                 .writeToImage();
+    }
+
+    @Test
+    public void spheresOnTube(){
+        Camera camera = new Camera(new Point(9000, 0, 1500),new Point(0,0,750)) //
+                .setVPSize(200, 200).setVPDistance(750);
+
+        scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+
+        scene.geometries.add(new Tube(new Ray(new Point(0,-1,0),new Vector(0,1,0)),300)
+                .setMaterial(new Material().setShininess(300).setkS(0.5).setkD(0.5).setkR(1))
+                .setEmission(new Color(184,134,11)));
+        double radius = 200;
+        int j = 300;
+        Color color = new Color(136,139,141);
+        for (j = j; j <= 1000;) {
+            j += radius;
+            for (int i =-1000; i <= 1000 ; i+= 400) {
+                scene.geometries.add(new Sphere(radius,new Point(0,i,j))
+                        .setMaterial(new Material().setShininess(300).setkS(0.5).setkD(0.5).setkR(1))
+                        .setEmission(color));
+            }
+            j += radius;
+            radius = radius/2;
+            color = color.scale(0.7);
+        }
+
+        scene.setLights(
+                new SpotLight(new Color(700,300,500),new Point(1000,200,750),new Vector(-2,-0.4,-1.4))
+                        .setNarrowBeam(400).setkL(0.0003).setkQ(0.000001),
+                new PointLight(new Color(500,300,300),new Point(-2500,5400,2000))
+                        .setkL(0.0003).setkQ(0.000001));
+
+        ImageWriter imageWriter = new ImageWriter("tubeAndSpheres", 600, 600);
+
+        camera.setImageWriter(imageWriter) //
+                .setRayTracer(new RayTracerBasic(scene)) //
+                .renderImage() //
+                .writeToImage();
+
     }
 }
