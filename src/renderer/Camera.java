@@ -57,8 +57,11 @@ public class Camera {
         this.vRight = vTo.crossProduct(vUp).normalize();
     }
 
-    public Camera(Point place){
-        this(place, new Vector(-1, 0, 0), new Vector(0, 0, 1));
+    public Camera(Point place, Point to){
+
+        this(place, new Point(to.getX(), to.getY(), place.getZ()).subtract(place), new Vector(0, 0, 1));
+        double alpha = Math.acos(this.vTo.dotProduct(to.subtract(place).normalize()));
+        this.Turn_up(alpha);
     }
     public Camera Turn_right(double alpha){
         this.vRight= this.vRight.rotate(alpha, this.vTo.scale(-1));

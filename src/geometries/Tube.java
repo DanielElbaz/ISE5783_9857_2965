@@ -4,6 +4,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -135,6 +136,8 @@ public class Tube extends Geometry{
             return List.of(new GeoPoint(this, ray.getPoint(t1)),new GeoPoint(this, ray.getPoint(t2)));
         else if (alignZero(t1 - maxDistance) < 0)// t2 is behind the head
             return List.of(new GeoPoint(this, ray.getPoint(t1)));
+        //List<Point> points = findIntersections(ray);
         return null;
+
     }
 }

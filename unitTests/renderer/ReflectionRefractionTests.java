@@ -5,13 +5,11 @@ package renderer;
 
 import static java.awt.Color.*;
 
-import geometries.Polygon;
+import geometries.*;
 import lighting.DirectionalLight;
 import lighting.PointLight;
 import org.junit.jupiter.api.Test;
 
-import geometries.Sphere;
-import geometries.Triangle;
 import lighting.AmbientLight;
 import lighting.SpotLight;
 import primitives.*;
@@ -110,23 +108,23 @@ public class ReflectionRefractionTests {
 
     @Test
     public void myPicture(){
-        Camera camera = new Camera(new Point(7500, 250, 950)) //
-                .setVPSize(200, 200).setVPDistance(750).Turn_right(Math.PI/80).Turn_up(Math.PI/16);
+        Camera camera = new Camera(new Point(9000, 1500, 1350),new Point(250,0,250)) //
+                .setVPSize(200, 200).setVPDistance(750);
 
         scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
 
         scene.geometries.add(new Sphere(200,new Point(250,0,250))
-                        .setMaterial(new Material().setShininess(100).setkD(0.6).setkS(0.4))
+                        .setMaterial(new Material().setShininess(100).setkD(0.6).setkS(0.4).setkR(1))
                         .setEmission(new Color(PINK)),
                 new Sphere(30, new Point(816,0,280))
                         .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
-                        .setEmission(new Color(gray)),
+                        .setEmission(new Color(184,134,11)),
                 new Sphere(30, new Point(250,566,280))
                         .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
-                        .setEmission(new Color(gray)),
+                        .setEmission(new Color(184,134,11)),
                 new Sphere(30, new Point(250,-566,280))
                         .setMaterial(new Material().setShininess(100).setkD(0.8).setkS(0.2).setkR(0.2))
-                        .setEmission(new Color(gray)),
+                        .setEmission(new Color(184,134,11)),
                 new Triangle(new Point(816,0,250),
                         new Point(250,566,250),
                         new Point(250,0,0))
@@ -147,16 +145,19 @@ public class ReflectionRefractionTests {
                         new Point(250,0,0))
                         .setMaterial(new Material().setShininess(80)
                                 .setkT(0.7)).setEmission(new Color(red)),
-                new Triangle(new Point(2000,-1000,0),
+                new Triangle(new Point(3000,-1000,0),
                         new Point(-1000,-1000,0),
-                        new Point(2000,1000,0))
+                        new Point(3000,1000,0))
                         .setMaterial(new Material().setShininess(100)
                                 .setkR(0.6).setkS(80).setkD(20)),
-                new Triangle(new Point(2000,1000,0),
+                new Triangle(new Point(3000,1000,0),
                         new Point(-1000,1000,0),
                         new Point(-1000,-1000,0))
                         .setMaterial(new Material().setShininess(100)
-                                .setkR(0.6).setkS(80).setkD(20)));
+                                .setkR(0.6).setkS(80).setkD(20)),
+                new Tube(new Ray(new Point(400, -400,0),new Vector(0,-0.05,1)),40)
+                        .setMaterial(new Material().setkR(0.3).setkD(0.5).setkS(0.5)
+                                .setShininess(100)).setEmission(new Color(136,139,141)));
                           /* new Polygon(new Point(-200,-500,0),
                                        new Point(-200,-500,2000),
                                        new Point(-200,500,2000),
