@@ -263,4 +263,122 @@ public class ReflectionRefractionTests {
                 .writeToImage();
 
     }
+
+    @Test
+    public void myTests(){
+        Camera camera = new Camera(new Point(9000, 0, 1000),new Point(0,0,100)) //
+                .setVPSize(200, 200).setVPDistance(750);
+
+        scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+
+        scene.geometries.add(new HalfSphere(250,new Point(1,-1,0),new Vector(0,0,1))
+                .setMaterial(new Material().setkR(0.8).setkS(0.5).setkD(0.5))
+                .setEmission(new Color(blue)),
+                new HalfSphere(180,new Point(1,-1,0),new Vector(0,0,1))
+                        .setMaterial(new Material().setkR(0.8).setkS(0.5).setkD(0.5))
+                        .setEmission(new Color(blue)),
+                new Ring(250,new Point(1,-1,0),new Vector(0,0,1),180)
+                        .setMaterial(new Material().setkR(0.8).setkS(0.5).setkD(0.5))
+                        .setEmission(new Color(blue)),
+                new Sphere(180,new Point(1,-1,0))
+                        .setMaterial(new Material().setkR(0.8).setkS(0.5).setkD(0.5))
+                        .setEmission(new Color(ORANGE)),
+                new Ring(250, new Point(1,-1,430),new Vector(1,0,0), 180)
+                .setMaterial(new Material().setkR(0.8).setkS(0.5).setkD(0.5))
+                .setEmission(new Color(blue)),
+                new Tube(new Ray(new Point(0,0,560), new Vector(1,2,0)), 50)
+                        .setMaterial(new Material().setkR(0.8).setkS(0.5).setkD(0.5))
+                        .setEmission(new Color(136,139,141))
+                );
+
+        scene.setLights(
+                new SpotLight(new Color(700,300,500),new Point(1000,200,750),new Vector(-2,-0.4,-1.4))
+                        .setNarrowBeam(400).setkL(0.0003).setkQ(0.000001),
+                new PointLight(new Color(500,300,300),new Point(-2500,5400,2000))
+                        .setkL(0.0003).setkQ(0.000001));
+
+        ImageWriter imageWriter = new ImageWriter("myTestes", 600, 600);
+
+        camera.setImageWriter(imageWriter) //
+                .setRayTracer(new RayTracerBasic(scene)) //
+                .renderImage() //
+                .writeToImage();
+    }
+
+    @Test
+    public void cylinderTest(){
+        Camera camera = new Camera(new Point(9000, 0, 1000),new Point(0,0,100)) //
+                .setVPSize(200, 200).setVPDistance(750);
+
+        scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+
+        scene.geometries.add(new SliceOfSphare(200,new Point(0,-50,100),
+                new Vector(-1,1,-5), 0,40)
+                .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                .setEmission(new Color(BLUE)),
+                new SliceOfSphare(200,new Point(0,-50,100),
+                        new Vector(-1,1,-5), 40,80)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(GREEN)),
+                new SliceOfSphare(200,new Point(0,-50,100),
+                        new Vector(-1,1,-5), 80,120)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(red)),
+                new SliceOfSphare(200,new Point(0,-50,100),
+                        new Vector(-1,1,-5), 120,160)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(CYAN)),
+                new SliceOfSphare(200,new Point(0,-50,100),
+                        new Vector(-1,1,-5), 160,200)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(ORANGE)),
+                new SliceOfSphare(200,new Point(0,-50,100),
+                        new Vector(1,-1,5), 160,200)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(BLUE)),
+                new SliceOfSphare(200,new Point(0,-50,100),
+                        new Vector(1,-1,5), 120,160)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(MAGENTA)),
+                new SliceOfSphare(200,new Point(0,-50,100),
+                        new Vector(1,-1,5), 80,120)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(PINK)),
+                new SliceOfSphare(200,new Point(0,-50,100),
+                        new Vector(1,-1,5), 40,80)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(GREEN)),
+                new SliceOfSphare(200,new Point(0,-50,100),
+                        new Vector(1,-1,5), 0,40)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(BLUE)),
+                new Ring(370,new Point(0,-50,100),new Vector(1,-1,5),350)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(184,134,11)),
+                new Ring(390,new Point(0,-50,100),new Vector(1,-1,5),370)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(136,139,141)),
+                new Ring(410,new Point(0,-50,100),new Vector(1,-1,5),390)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(184,134,11)),
+                new Ring(430,new Point(0,-50,100),new Vector(1,-1,5),410)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(136,139,141)),
+                new Ring(450,new Point(0,-50,100),new Vector(1,-1,5),430)
+                        .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
+                        .setEmission(new Color(184,134,11)));
+
+        scene.setLights(
+                new SpotLight(new Color(700,300,500),new Point(1000,200,750),new Vector(-2,-0.4,-1.4))
+                        .setNarrowBeam(400).setkL(0.0003).setkQ(0.000001),
+                new PointLight(new Color(500,300,300),new Point(-2500,5400,2000))
+                        .setkL(0.0003).setkQ(0.000001));
+
+        ImageWriter imageWriter = new ImageWriter("myTestes", 600, 600);
+
+        camera.setImageWriter(imageWriter) //
+                .setRayTracer(new RayTracerBasic(scene)) //
+                .renderImage() //
+                .writeToImage();
+    }
 }

@@ -12,7 +12,7 @@ import static primitives.Util.alignZero;
  * The Sphere class extends RadialGeometry and represents a sphere in a 3D space.
  */
 public class Sphere extends RadialGeometry {
-    private final Point center;
+    protected final Point center;
 
     public Sphere(double radius, Point center) {
         super(radius);
