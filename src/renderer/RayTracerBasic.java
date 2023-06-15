@@ -33,20 +33,14 @@ public class RayTracerBasic extends RayTracerBase{
      */
     @Override
     public Color traceRay(Ray ray) {
-        GeoPoint closestPoint = findClosestIntersection(ray);
-        return closestPoint == null? scene.background : calcColor(closestPoint, ray);
+        GeoPoint closestPoint = findClosestIntersection(ray); // the closest point to the camera
+        return closestPoint == null? scene.background : calcColor(closestPoint, ray); // if there is no intersection
+                                                                                    // return the background color
     }
 
+
     /**
-     * @param
-     * @return
-     */
-    public Color traceRays(Ray ray) {
-        GeoPoint closestPoint = findClosestIntersection(ray);
-        return closestPoint == null? scene.background : calcColor(closestPoint, ray);
-    }
-    /**
-     * @param p
+     * @param p the point
      * @return the color of the point
      */
     private Color calcColor(GeoPoint p, Ray ray, int level, Double3 k){
