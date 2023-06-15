@@ -1,6 +1,8 @@
 package renderer;
 
-import primitives.*;
+import primitives.Color;
+import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 import java.util.*;
@@ -18,7 +20,9 @@ public class Camera {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
 
-    private static Random random = new Random();
+    private static Random rand = new Random();
+
+    private int numOfSamples = 0;
 
     public Point getPlace() {
         return place;
@@ -57,22 +61,20 @@ public class Camera {
         this.vRight = vTo.crossProduct(vUp).normalize();
     }
 
-    public Camera(Point place, Point to) {
+    public Camera(Point place, Point to){
 
         this(place, new Point(to.getX(), to.getY(), place.getZ()).subtract(place), new Vector(0, 0, 1));
         double alpha = Math.acos(this.vTo.dotProduct(to.subtract(place).normalize()));
         this.Turn_up(alpha);
     }
-
-    public Camera Turn_right(double alpha) {
-        this.vRight = this.vRight.rotate(alpha, this.vTo.scale(-1));
-        this.vTo = this.vUp.crossProduct(vRight);
+    public Camera Turn_right(double alpha){
+        this.vRight= this.vRight.rotate(alpha, this.vTo.scale(-1));
+        this.vTo=this.vUp.crossProduct(vRight);
         return this;
     }
-
-    public Camera Turn_up(double alpha) {
-        this.vUp = this.vUp.rotate(alpha, this.vTo);
-        this.vTo = this.vUp.crossProduct(vRight);
+    public Camera Turn_up(double alpha){
+        this.vUp= this.vUp.rotate(alpha, this.vTo);
+        this.vTo=this.vUp.crossProduct(vRight);
         return this;
     }
 
@@ -94,6 +96,14 @@ public class Camera {
 
     public Camera setRayTracer(RayTracerBase tracer) {
         this.rayTracerBase = tracer;
+        return this;
+    }
+
+    public Camera setSamples(int num){
+        if(num < 0){
+            throw new IllegalArgumentException("Samples can't be negative!!!");
+        }
+        this.numOfSamples = num;
         return this;
     }
 
@@ -124,24 +134,24 @@ public class Camera {
         return new Ray(place, Vij); //the ray from the camera to the point on the view plane
     }
 
-    public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, int numSamples) {
-        List<Ray> rays = new ArrayList<>();
+
+
+    public LinkedList<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, int numSamples) {
+        LinkedList<Ray> rays = new LinkedList<>();
         Point Pc = place.add(vTo.scale(distance)); // the center of the view plane
         double Ry = height / nY;
         double Rx = width / nX;
         double subPixelSizeX = Rx / numSamples;
         double subPixelSizeY = Ry / numSamples;
 
-
         for (int s = 0; s < numSamples; s++) {
             for (int t = 0; t < numSamples; t++) {
                 // Calculate the sub-pixel offset within the sub-pixel
-                double subPixelOffsetX = (random.nextDouble() + t) * subPixelSizeX;
-                double subPixelOffsetY = (random.nextDouble() + s) * subPixelSizeY;
+                double subPixelOffsetX = (Math.random() + t) * subPixelSizeX;
+                double subPixelOffsetY = (Math.random() + s) * subPixelSizeY;
 
-                double yi = -(i - (nY - 1) / 2d + subPixelOffsetY); // the y coordinate of the sub-pixel
-                double xj = (j - (nX - 1) / 2d + subPixelOffsetX); // the x coordinate of the sub-pixel
-
+                double yi = -(i - (nY - 1) / 2d + subPixelOffsetY) * Ry; // the y coordinate of the sub-pixel
+                double xj = (j - (nX - 1) / 2d + subPixelOffsetX) * Rx; // the x coordinate of the sub-pixel
 
                 Point Pij = Pc; // the point on the view plane
 
@@ -155,9 +165,9 @@ public class Camera {
                 rays.add(new Ray(place, Vij)); // add the ray to the list of rays
             }
         }
+
         return rays;
     }
-
 
     /**
      * Renders the image using the camera settings.
@@ -233,10 +243,14 @@ public class Camera {
     }
 
     private Color castRays(int pixX, int pixY) {
+        if(this.numOfSamples<2){
+            return castRay(pixX,pixY);
+        }
+        LinkedList<Ray> rays = constructRaysThroughPixel(imageWriter.getNx(), imageWriter.getNx(), pixX, pixY, 32);
         Color color = Color.BLACK;
-        List<Ray> rays = constructRaysThroughPixel(imageWriter.getNx(), imageWriter.getNx(), pixX, pixY, 9);
-        for (Ray ray : rays) {
-            color.add(rayTracerBase.traceRay(ray));
+        for (Ray ray:
+             rays) {
+            color = color.add(rayTracerBase.traceRay(ray));
         }
         return color.reduce(rays.size());
     }
