@@ -307,8 +307,8 @@ public class ReflectionRefractionTests {
 
     @Test
     public void cylinderTest(){
-        Camera camera = new Camera(new Point(9000, 0, 1000),new Point(0,0,100)) //
-                .setVPSize(200, 200).setVPDistance(750);
+        Camera camera = new Camera(new Point(7000, 0, 1000),new Point(0,0,100)) //
+                .setVPSize(200, 200).setVPDistance(750).setSamples(9);
 
         scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
 
@@ -374,7 +374,7 @@ public class ReflectionRefractionTests {
                 new PointLight(new Color(500,300,300),new Point(-2500,5400,2000))
                         .setkL(0.0003).setkQ(0.000001));
 
-        ImageWriter imageWriter = new ImageWriter("myTestes", 600, 600);
+        ImageWriter imageWriter = new ImageWriter("saturn", 1000, 1000);
 
         camera.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene)) //

@@ -5,7 +5,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
-import java.util.MissingResourceException;
+import java.util.*;
 
 import static primitives.Util.isZero;
 
@@ -19,6 +19,10 @@ public class Camera {
     private double distance;
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
+
+    private static Random rand = new Random();
+
+    private int numOfSamples = 0;
 
     public Point getPlace() {
         return place;
@@ -95,6 +99,14 @@ public class Camera {
         return this;
     }
 
+    public Camera setSamples(int num){
+        if(num < 0){
+            throw new IllegalArgumentException("Samples can't be negative!!!");
+        }
+        this.numOfSamples = num;
+        return this;
+    }
+
     /**
      * Constructs a ray through a pixel
      *
@@ -122,6 +134,41 @@ public class Camera {
         return new Ray(place, Vij); //the ray from the camera to the point on the view plane
     }
 
+
+
+    public LinkedList<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, int numSamples) {
+        LinkedList<Ray> rays = new LinkedList<>();
+        Point Pc = place.add(vTo.scale(distance)); // the center of the view plane
+        double Ry = height / nY;
+        double Rx = width / nX;
+        double subPixelSizeX = Rx / numSamples;
+        double subPixelSizeY = Ry / numSamples;
+
+        for (int s = 0; s < numSamples; s++) {
+            for (int t = 0; t < numSamples; t++) {
+                // Calculate the sub-pixel offset within the sub-pixel
+                double subPixelOffsetX = (Math.random() + t) * subPixelSizeX;
+                double subPixelOffsetY = (Math.random() + s) * subPixelSizeY;
+
+                double yi = -(i - (nY - 1) / 2d + subPixelOffsetY) * Ry; // the y coordinate of the sub-pixel
+                double xj = (j - (nX - 1) / 2d + subPixelOffsetX) * Rx; // the x coordinate of the sub-pixel
+
+                Point Pij = Pc; // the point on the view plane
+
+                if (!isZero(xj))
+                    Pij = Pij.add(vRight.scale(xj)); // add x-coordinate offset to the view plane point
+
+                if (!isZero(yi))
+                    Pij = Pij.add(vUp.scale(yi)); // add y-coordinate offset to the view plane point
+
+                Vector Vij = Pij.subtract(place); // the vector from the camera to the point on the view plane
+                rays.add(new Ray(place, Vij)); // add the ray to the list of rays
+            }
+        }
+
+        return rays;
+    }
+
     /**
      * Renders the image using the camera settings.
      * Throws a MissingResourceException if any required field is empty.
@@ -142,7 +189,7 @@ public class Camera {
         int yPix = imageWriter.getNy();
         for (int i = 0; i < xPix; i++) {
             for (int j = 0; j < yPix; j++) {
-                Color pixColor = castRay(i, j);
+                Color pixColor = castRays(i, j);
                 imageWriter.writePixel(i, j, pixColor);
             }
         }
@@ -193,6 +240,19 @@ public class Camera {
     private Color castRay(int pixX, int pixY) {
         Ray ray = constructRayThroughPixel(imageWriter.getNx(), imageWriter.getNx(), pixX, pixY);
         return rayTracerBase.traceRay(ray);
+    }
+
+    private Color castRays(int pixX, int pixY) {
+        if(this.numOfSamples<2){
+            return castRay(pixX,pixY);
+        }
+        LinkedList<Ray> rays = constructRaysThroughPixel(imageWriter.getNx(), imageWriter.getNx(), pixX, pixY, 32);
+        Color color = Color.BLACK;
+        for (Ray ray:
+             rays) {
+            color = color.add(rayTracerBase.traceRay(ray));
+        }
+        return color.reduce(rays.size());
     }
 
     /**
