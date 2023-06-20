@@ -9,11 +9,11 @@ import java.util.List;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
-public class SliceOfSphare extends HalfSphere{
+public class SliceOfSphere extends HalfSphere{
     private double minRad;
     private double maxRad;
 
-    public SliceOfSphare(double radius, Point center, Vector dir, double minRad, double maxRad) {
+    public SliceOfSphere(double radius, Point center, Vector dir, double minRad, double maxRad) {
         super(radius, center, dir);
         if(minRad >= maxRad){
             throw new IllegalArgumentException("min can't be bigger then max!!!");

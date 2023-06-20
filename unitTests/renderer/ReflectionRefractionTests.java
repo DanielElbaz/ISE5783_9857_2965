@@ -6,14 +6,12 @@ package renderer;
 import static java.awt.Color.*;
 
 import geometries.*;
-import lighting.DirectionalLight;
 import lighting.PointLight;
 import org.junit.jupiter.api.Test;
 
 import lighting.AmbientLight;
 import lighting.SpotLight;
 import primitives.*;
-import renderer.*;
 import scene.Scene;
 
 /** Tests for reflection and transparency functionality, test for partial
@@ -227,7 +225,7 @@ public class ReflectionRefractionTests {
     @Test
     public void spheresOnTube(){
         Camera camera = new Camera(new Point(9000, 0, 1500),new Point(0,0,750)) //
-                .setVPSize(200, 200).setVPDistance(750);
+                .setVPSize(200, 200).setVPDistance(750).setSamples(32);
 
         scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
 
@@ -255,7 +253,7 @@ public class ReflectionRefractionTests {
                 new PointLight(new Color(500,300,300),new Point(-2500,5400,2000))
                         .setkL(0.0003).setkQ(0.000001));
 
-        ImageWriter imageWriter = new ImageWriter("tubeAndSpheres", 600, 600);
+        ImageWriter imageWriter = new ImageWriter("tubeAndSpheres", 1000, 1000);
 
         camera.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene)) //
@@ -312,43 +310,43 @@ public class ReflectionRefractionTests {
 
         scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
 
-        scene.geometries.add(new SliceOfSphare(200,new Point(0,-50,100),
+        scene.geometries.add(new SliceOfSphere(200,new Point(0,-50,100),
                 new Vector(-1,1,-5), 0,40)
                 .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                 .setEmission(new Color(BLUE)),
-                new SliceOfSphare(200,new Point(0,-50,100),
+                new SliceOfSphere(200,new Point(0,-50,100),
                         new Vector(-1,1,-5), 40,80)
                         .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                         .setEmission(new Color(GREEN)),
-                new SliceOfSphare(200,new Point(0,-50,100),
+                new SliceOfSphere(200,new Point(0,-50,100),
                         new Vector(-1,1,-5), 80,120)
                         .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                         .setEmission(new Color(red)),
-                new SliceOfSphare(200,new Point(0,-50,100),
+                new SliceOfSphere(200,new Point(0,-50,100),
                         new Vector(-1,1,-5), 120,160)
                         .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                         .setEmission(new Color(CYAN)),
-                new SliceOfSphare(200,new Point(0,-50,100),
+                new SliceOfSphere(200,new Point(0,-50,100),
                         new Vector(-1,1,-5), 160,200)
                         .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                         .setEmission(new Color(ORANGE)),
-                new SliceOfSphare(200,new Point(0,-50,100),
+                new SliceOfSphere(200,new Point(0,-50,100),
                         new Vector(1,-1,5), 160,200)
                         .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                         .setEmission(new Color(BLUE)),
-                new SliceOfSphare(200,new Point(0,-50,100),
+                new SliceOfSphere(200,new Point(0,-50,100),
                         new Vector(1,-1,5), 120,160)
                         .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                         .setEmission(new Color(MAGENTA)),
-                new SliceOfSphare(200,new Point(0,-50,100),
+                new SliceOfSphere(200,new Point(0,-50,100),
                         new Vector(1,-1,5), 80,120)
                         .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                         .setEmission(new Color(PINK)),
-                new SliceOfSphare(200,new Point(0,-50,100),
+                new SliceOfSphere(200,new Point(0,-50,100),
                         new Vector(1,-1,5), 40,80)
                         .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                         .setEmission(new Color(GREEN)),
-                new SliceOfSphare(200,new Point(0,-50,100),
+                new SliceOfSphere(200,new Point(0,-50,100),
                         new Vector(1,-1,5), 0,40)
                         .setMaterial(new Material().setkR(1).setkS(0.6).setkD(0.4))
                         .setEmission(new Color(BLUE)),
