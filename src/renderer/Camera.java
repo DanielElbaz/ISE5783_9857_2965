@@ -4,10 +4,13 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+import java.util.stream.*;
 
 import java.util.*;
 
 import static primitives.Util.isZero;
+
+
 
 public class Camera {
     private Point place;
@@ -169,6 +172,8 @@ public class Camera {
         return rays;
     }
 
+
+
     /**
      * Renders the image using the camera settings.
      * Throws a MissingResourceException if any required field is empty.
@@ -187,12 +192,22 @@ public class Camera {
         }
         int xPix = imageWriter.getNx();
         int yPix = imageWriter.getNy();
-        for (int i = 0; i < xPix; i++) {
+
+        Pixel.initialize(yPix,xPix, Pixel.printInterval);
+        IntStream.range(0,yPix).parallel().forEach(i->{
+            IntStream.range(0,xPix).parallel().forEach(j->{
+                recursiveCastRays(j,i);
+                Pixel.pixelDone();
+                Pixel.printPixel();
+            });
+        });
+
+        /*for (int i = 0; i < xPix; i++) {
             for (int j = 0; j < yPix; j++) {
-                Color pixColor = castRays(i, j);
+                Color pixColor = recursiveCastRays(i,j);
                 imageWriter.writePixel(i, j, pixColor);
             }
-        }
+        }*/
         return this;
     }
 
@@ -255,6 +270,7 @@ public class Camera {
         return color.reduce(rays.size());
     }
 
+
     /**
      * Rotates the camera to the right by the specified angle in radians.
      *
@@ -276,6 +292,84 @@ public class Camera {
     public Camera rotateLeft(double rad) {
         Vector rotVup = vUp.rotate(rad, vRight.scale(-1));
         return new Camera(place, vTo, rotVup);
+    }
+    public Point findPixelCenter(int nX, int nY, int j, int i) {
+        Point Pc = place.add(vTo.scale(distance)); //the center of the view plane
+        double Ry = height / nY;
+        double Rx = width / nX;
+        double yi = -(i - (nY - 1) / 2d) * Ry; //the y coordinate of the pixel
+        double xj = (j - (nX - 1) / 2d) * Rx; //the x coordinate of the pixel
+        Point Pij = Pc; //the point on the view plane
+        if (!isZero(xj))
+            //the point on the view plane with the x coordinate of the pixel added to it
+            Pij = Pij.add(vRight.scale(xj));
+        if (!isZero(yi))
+            //the point on the view plane with the y coordinate of the pixel added to it
+            // (the minus is because the y-axis is upside down)
+            Pij = Pij.add(vUp.scale(yi));
+
+        return Pij; //the ray from the camera to the point on the view plane
+    }
+
+    public List<Point> cornersPixel(Point Pij,double height,double width){
+
+        Vector vRight = this.vRight.scale(width/2);
+        Vector vUp = this.vUp.scale(height/2);
+
+        Point p1 = Pij.subtract(vRight.scale(-width/2)).add(vUp.scale(-height/2));
+        Point p2 = Pij.add(vRight.scale(width/2)).add(vUp.scale(-height/2));
+        Point p3 = Pij.add(vRight.scale(width/2)).subtract(vUp.scale(-height/2));
+        Point p4 = Pij.subtract(vRight.scale(-width/2)).subtract(vUp.scale(-height/2));
+
+
+        List<Point> corners = new ArrayList<>();
+        corners.add(p1);
+        corners.add(p2);
+        corners.add(p3);
+        corners.add(p4);
+
+        return corners;
+    }
+    public Color recursiveCastRays(int pixX,int pixY){
+        if(this.numOfSamples<2){
+            return castRay(pixX,pixY);
+        }
+        List<Point>corners= cornersPixel(findPixelCenter(imageWriter.getNx(),imageWriter.getNy(),pixX,pixY),height,width);
+        return recCastRayHelper(corners.get(0),corners.get(1),corners.get(2),corners.get(3),1);
+    }
+
+    public Color recCastRayHelper(Point p1,Point p2,Point p3,Point p4,int level){
+        Color pixelColor = rayTracerBase.traceRay(new Ray(place,p1.subtract(place)));
+
+        if (pixelColor.equals(rayTracerBase.traceRay(new Ray(place,p2.subtract(place))))&&
+                pixelColor.equals(rayTracerBase.traceRay(new Ray(place,p3.subtract(place))))&&
+                pixelColor.equals(rayTracerBase.traceRay(new Ray(place,p4.subtract(place))))){
+            return pixelColor;
+        }
+
+        double centerX=p2.subtract(p1).length()/2;
+        double centerY=p2.subtract(p3).length()/2;
+        Point center = p1.add(vRight.scale(centerX)).add(vUp.scale(-centerY));
+
+        if (level >= this.numOfSamples){
+            Ray ray = new Ray(place,center.subtract(place));
+            return rayTracerBase.traceRay(ray);
+       }
+
+        Point p12 = p1.add(vRight.scale(centerX));
+        Point p23 = p2.subtract(vUp.scale(centerY));
+        Point p34 = p3.subtract(vRight.scale(centerX));
+        Point p41 = p4.add(vUp.scale(centerY));
+
+        Color c1 = recCastRayHelper(p1,p12,center,p41,level*2);
+        Color c2 = recCastRayHelper(p12,p2,p23,center,level*2);
+        Color c3 = recCastRayHelper(center,p23,p3,p34,level*2);
+        Color c4 = recCastRayHelper(p41,center,p34,p4,level*2);
+
+        Color color = Color.BLACK;
+        color = color.add(c1).add(c2).add(c3).add(c4);
+        return color.reduce(4);
+
     }
 
 }

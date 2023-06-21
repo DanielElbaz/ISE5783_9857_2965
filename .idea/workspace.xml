@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e08e8dc7-072f-4d7d-8a5f-fe1e66a2c6c1" name="Changes" comment="stage8">
-      <change afterPath="$PROJECT_DIR$/images/box.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/unitTests/renderer/ThePictureTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/Pixel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/box.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/box.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/images/tubeAndSpheres.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/tubeAndSpheres.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/SliceOfSphare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/SliceOfSphere.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitTests/renderer/ThePictureTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/ThePictureTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -391,7 +391,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1686511296044</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL‎-00028" summary="stage8">
+      <created>1687256409561</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL‎-00028" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1687256409561</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -425,7 +432,8 @@
     <MESSAGE value="7 3D Amazing!!!" />
     <MESSAGE value="full of balls" />
     <MESSAGE value="some more improvement" />
-    <option name="LAST_COMMIT_MESSAGE" value="some more improvement" />
+    <MESSAGE value="stage8" />
+    <option name="LAST_COMMIT_MESSAGE" value="stage8" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
