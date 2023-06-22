@@ -174,42 +174,7 @@ public class Camera {
 
 
 
-    /**
-     * Renders the image using the camera settings.
-     * Throws a MissingResourceException if any required field is empty.
-     */
-    public Camera renderImage() {
-        if (this.place == null ||
-                this.vTo == null ||
-                this.vUp == null ||
-                this.vRight == null ||
-                this.distance == 0 ||
-                this.height == 0 ||
-                this.width == 0 ||
-                this.rayTracerBase == null ||
-                this.imageWriter == null) {
-            throw new MissingResourceException("Some field is empty", "Camera", "");
-        }
-        int xPix = imageWriter.getNx();
-        int yPix = imageWriter.getNy();
 
-        Pixel.initialize(yPix,xPix, Pixel.printInterval);
-        IntStream.range(0,yPix).parallel().forEach(i->{
-            IntStream.range(0,xPix).parallel().forEach(j->{
-                recursiveCastRays(j,i);
-                Pixel.pixelDone();
-                Pixel.printPixel();
-            });
-        });
-
-        /*for (int i = 0; i < xPix; i++) {
-            for (int j = 0; j < yPix; j++) {
-                Color pixColor = recursiveCastRays(i,j);
-                imageWriter.writePixel(i, j, pixColor);
-            }
-        }*/
-        return this;
-    }
 
     /**
      * Prints a grid pattern on the image at specified intervals with the given color.
@@ -313,13 +278,13 @@ public class Camera {
 
     public List<Point> cornersPixel(Point Pij,double height,double width){
 
-        Vector vRight = this.vRight.scale(width/2);
-        Vector vUp = this.vUp.scale(height/2);
+        Vector vR = this.vRight.scale(width/2);
+        Vector vU = this.vUp.scale(height/2);
 
-        Point p1 = Pij.subtract(vRight.scale(-width/2)).add(vUp.scale(-height/2));
-        Point p2 = Pij.add(vRight.scale(width/2)).add(vUp.scale(-height/2));
-        Point p3 = Pij.add(vRight.scale(width/2)).subtract(vUp.scale(-height/2));
-        Point p4 = Pij.subtract(vRight.scale(-width/2)).subtract(vUp.scale(-height/2));
+        Point p1 = Pij.add(vR.scale(-1)).add(vU);
+        Point p2 = Pij.add(vR).add(vU);
+        Point p3 = Pij.add(vR).add(vU.scale(-1));
+        Point p4 = Pij.add(vR.scale(-1)).add(vU.scale(-1));
 
 
         List<Point> corners = new ArrayList<>();
@@ -349,7 +314,7 @@ public class Camera {
 
         double centerX=p2.subtract(p1).length()/2;
         double centerY=p2.subtract(p3).length()/2;
-        Point center = p1.add(vRight.scale(centerX)).add(vUp.scale(-centerY));
+        Point center = p1.add(vRight.scale(centerX)).add(vUp.scale(centerY));
 
         if (level >= this.numOfSamples){
             Ray ray = new Ray(place,center.subtract(place));
@@ -369,6 +334,42 @@ public class Camera {
         Color color = Color.BLACK;
         color = color.add(c1).add(c2).add(c3).add(c4);
         return color.reduce(4);
+
+    }
+    /**
+     * Renders the image using the camera settings.
+     * Throws a MissingResourceException if any required field is empty.
+     */
+    public Camera renderImage() {
+        if (this.place == null ||
+                this.vTo == null ||
+                this.vUp == null ||
+                this.vRight == null ||
+                this.distance == 0 ||
+                this.height == 0 ||
+                this.width == 0 ||
+                this.rayTracerBase == null ||
+                this.imageWriter == null) {
+            throw new MissingResourceException("Some field is empty", "Camera", "");
+        }
+        int xPix = imageWriter.getNx();
+        int yPix = imageWriter.getNy();
+
+        Pixel.initialize(yPix,xPix, Pixel.printInterval);
+        IntStream.range(0,yPix).parallel().forEach(i->{
+            IntStream.range(0,xPix).parallel().forEach(j->{
+                Color pixColor = recursiveCastRays(i,j);
+                imageWriter.writePixel(i, j, pixColor);
+                Pixel.pixelDone();
+                Pixel.printPixel();
+            });
+        });
+        return this;
+        /*for (int i = 0; i < xPix; i++) {
+            for (int j = 0; j < yPix; j++) {
+
+            }
+        }*/
 
     }
 

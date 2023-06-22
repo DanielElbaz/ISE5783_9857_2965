@@ -20,34 +20,34 @@ public class ThePictureTests {
     @Test
     public void My_picture() {
         Camera camera = new Camera(new Point(6500, 0, 1100), new Point(0, 0, 750)) //
-                .setVPSize(200, 200).setVPDistance(750).setSamples(16);
+                .setVPSize(200, 200).setVPDistance(750).setSamples(1);
 
-        scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+        scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15)).setBackground(new Color(135,206,235));
 
         scene.geometries.add(
                 new Polygon(new Point(-7000, -800, 0), new Point(-7000, 800, 0),
-                        new Point(150, 800, 0), new Point(150, -800, 0))
+                        new Point(1000, 800, 0), new Point(1000, -800, 0))
                         .setEmission(new Color(242, 242, 242)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.01)),
 
                 new Polygon(new Point(-7000, -800, 1600), new Point(-7000, 800, 1600),
-                        new Point(150, 800, 1600), new Point(150, -800, 1600))
+                        new Point(400, 800, 1600), new Point(400, -800, 1600))
                         .setEmission(new Color(255, 0, 0)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.01)),
 
-                new Polygon(new Point(-7000, -800, 0), new Point(150, -800, 0),
-                        new Point(150, -800, 1600), new Point(-7000, -800, 1600))
+                new Polygon(new Point(-7000, -800, 0), new Point(1000, -800, 0),
+                        new Point(700, -800, 1600), new Point(-7000, -800, 1600))
                         .setEmission(new Color(0, 255, 0)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.01)),
 
                 new Polygon(new Point(-7000, 800, 0), new Point(-7000, 800, 800),
-                        new Point(150, 800, 800), new Point(150, 800, 0))
+                        new Point(1000, 800, 800), new Point(1000, 800, 0))
                         .setEmission(new Color(0, 0, 255)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.01)),
                 new Polygon(new Point(-7000, 800, 1200), new Point(-7000, 800, 1600),
-                        new Point(150, 800, 1600), new Point(150, 800, 1200))
+                        new Point(1000, 800, 1600), new Point(1000, 800, 1200))
                         .setEmission(new Color(0, 0, 255)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.01)),
                 new Polygon(new Point(-7000, 800, 800), new Point(-7000, 800, 1200),
                         new Point(-5000, 800, 1200), new Point(-5000, 800, 800))
                         .setEmission(new Color(0, 0, 255)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.01)),
                 new Polygon(new Point(-2500, 800, 800), new Point(-2500, 800, 1200),
-                        new Point(150, 800, 1200), new Point(150, 800, 800))
+                        new Point(1000, 800, 1200), new Point(1000, 800, 800))
                         .setEmission(new Color(0, 0, 255)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.01)),
 
                 new Polygon(new Point(-7000, -800, 0), new Point(-7000, 800, 0),
@@ -79,9 +79,9 @@ public class ThePictureTests {
                         .setMaterial(new Material().setkR(0.1).setkS(0.5).setkD(0.5))
                         .setEmission(new Color(128, 0, 32)),
                 //until here the wine
-                new Polygon(new Point(-2500, 790, 800), new Point(-5000, 790, 800),
+               /* new Polygon(new Point(-2500, 790, 800), new Point(-5000, 790, 800),
                         new Point(-5000, 790, 1200), new Point(-2500, 790, 1250))
-                        .setEmission(new Color(0, 191, 255)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(1)),
+                        .setEmission(new Color(0, 191, 255)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(1)),*/
                 //until here the window
                 new HalfSphere(100, new Point(-2400, -400, 450), new Vector(0, 0, 1))
                         .setMaterial(new Material().setkR(0.1).setkS(0.5).setkD(0.5))
@@ -145,21 +145,21 @@ public class ThePictureTests {
                 new Cylinder(30, new Ray(new Point(-3000, -300, 1130), new Vector(0, 0, 1)), 600)
                         .setEmission(new Color(184, 134, 19)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.1)),
                 new HalfSphere(130, new Point(-3000, -300, 1000), new Vector(0, 0, -1))
-                        .setEmission(new Color(184, 134, 11)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.1)),
+                        .setEmission(new Color(0, 191, 255)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(1)),
                 new HalfSphere(129, new Point(-3000, -300, 1000), new Vector(0, 0, -1))
                         .setEmission(new Color(184, 134, 11)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(1)),
 
                 new Cylinder(30, new Ray(new Point(-3000, 0, 1130), new Vector(0, 0, 1)), 600)
                         .setEmission(new Color(184, 134, 19)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.1)),
                 new HalfSphere(130, new Point(-3000, 0, 1000), new Vector(0, 0, -1))
-                        .setEmission(new Color(184, 134, 11)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.1)),
+                        .setEmission(new Color(0, 191, 255)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(1)),
                 new HalfSphere(129, new Point(-3000, 0, 1000), new Vector(0, 0, -1))
                         .setEmission(new Color(184, 134, 11)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(1)),
 
                 new Cylinder(30, new Ray(new Point(-3000, 300, 1130), new Vector(0, 0, 1)), 600)
                         .setEmission(new Color(184, 134, 19)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.1)),
                 new HalfSphere(130, new Point(-3000, 300, 1000), new Vector(0, 0, -1))
-                        .setEmission(new Color(184, 134, 11)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.1)),
+                        .setEmission(new Color(0, 191, 255)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(1)),
                 new HalfSphere(129, new Point(-3000, 300, 1000), new Vector(0, 0, -1))
                         .setEmission(new Color(184, 134, 11)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(1)));
 
@@ -183,6 +183,28 @@ public class ThePictureTests {
                 .renderImage() //
                 .writeToImage();
 
+    }
+    @Test
+    public void new_test() {
+        Camera camera = new Camera(new Point(6500, 0, 1100), new Point(0, 0, 750)) //
+                .setVPSize(200, 200).setVPDistance(750).setSamples(16);
+
+        scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+
+        scene.geometries.add(
+                new Polygon(new Point(-7000, -800, 0), new Point(-7000, 800, 0),
+                        new Point(150, 800, 0), new Point(150, -800, 0))
+                        .setEmission(new Color(242, 242, 242)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.01)),
+
+                new Polygon(new Point(-7000, -800, 1600), new Point(-7000, 800, 1600),
+                        new Point(150, 800, 1600), new Point(150, -800, 1600))
+                        .setEmission(new Color(255, 0, 0)).setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(100).setkR(0.01)));
+        ImageWriter imageWriter = new ImageWriter("petitbox", 1000, 1000);
+
+        camera.setImageWriter(imageWriter) //
+                .setRayTracer(new RayTracerBasic(scene)) //
+                .renderImage() //
+                .writeToImage();
     }
 }
 
