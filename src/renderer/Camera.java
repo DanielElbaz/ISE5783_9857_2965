@@ -221,7 +221,13 @@ public class Camera {
         Ray ray = constructRayThroughPixel(imageWriter.getNx(), imageWriter.getNx(), pixX, pixY);
         return rayTracerBase.traceRay(ray);
     }
-
+/**
+     * Casts a ray through the specified pixel and returns the color of the intersected object.
+     *
+     * @param pixX the x-coordinate of the pixel
+     * @param pixY the y-coordinate of the pixel
+     * @return the color of the intersected object
+     */
     private Color castRays(int pixX, int pixY) {
         if(this.numOfSamples<2){
             return castRay(pixX,pixY);
@@ -258,6 +264,13 @@ public class Camera {
         Vector rotVup = vUp.rotate(rad, vRight.scale(-1));
         return new Camera(place, vTo, rotVup);
     }
+    /**
+     * Rotates the camera up by the specified angle in radians.
+     *
+     * @param nX the number of pixels in the x direction
+     * @param nY the number of pixels in the y direction     *
+     * @return a Point with the center of the pixel
+     */
     public Point findPixelCenter(int nX, int nY, int j, int i) {
         Point Pc = place.add(vTo.scale(distance)); //the center of the view plane
         double Ry = height / nY;
@@ -275,7 +288,14 @@ public class Camera {
 
         return Pij; //the ray from the camera to the point on the view plane
     }
-
+/**
+     * Constructs a ray through the specified pixel.
+     *
+     * @param Pij the point on the view plane
+     * @param width the width of the view plane
+     * @param height the height of the view plane
+     * @return the ray through the specified pixel
+     */
     public List<Point> cornersPixel(Point Pij,double height,double width){
 
         Vector vR = this.vRight.scale(width/2);
@@ -295,6 +315,13 @@ public class Camera {
 
         return corners;
     }
+    /**
+     * Casts a ray through the specified pixel and returns the color of the intersected object.
+     *
+     * @param pixX the x-coordinate of the pixel
+     * @param pixY the y-coordinate of the pixel
+     * @return the color of the intersected object
+     */
     public Color recursiveCastRays(int pixX,int pixY){
         if(this.numOfSamples<2){
             return castRay(pixX,pixY);
@@ -302,7 +329,13 @@ public class Camera {
         List<Point>corners= cornersPixel(findPixelCenter(imageWriter.getNx(),imageWriter.getNy(),pixX,pixY),height,width);
         return recCastRayHelper(corners.get(0),corners.get(1),corners.get(2),corners.get(3),1);
     }
-
+/**
+     * Casts a ray through the specified pixel and returns the color of the intersected object.
+     *
+     * @param p1,p2,p3,p4 corners of the pixel
+     * @param level the level of the recursion
+     * @return the color of the intersected object
+     */
     public Color recCastRayHelper(Point p1,Point p2,Point p3,Point p4,int level){
         Color pixelColor = rayTracerBase.traceRay(new Ray(place,p1.subtract(place)));
 
@@ -355,10 +388,10 @@ public class Camera {
         int xPix = imageWriter.getNx();
         int yPix = imageWriter.getNy();
 
-        Pixel.initialize(yPix,xPix, Pixel.printInterval);
+        Pixel.initialize(yPix,xPix, Pixel.printInterval); //initializing the pixel counter
         IntStream.range(0,yPix).parallel().forEach(i->{
             IntStream.range(0,xPix).parallel().forEach(j->{
-                Color pixColor = recursiveCastRays(i,j);
+                Color pixColor = recursiveCastRays(i,j); //the color of the pixel using the recursive cast rays method
                 imageWriter.writePixel(i, j, pixColor);
                 Pixel.pixelDone();
                 Pixel.printPixel();

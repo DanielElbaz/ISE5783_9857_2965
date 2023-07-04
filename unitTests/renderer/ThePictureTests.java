@@ -22,7 +22,7 @@ public class ThePictureTests {
         Camera camera = new Camera(new Point(6500, 0, 1100), new Point(0, 0, 750)) //
                 .setVPSize(200, 200).setVPDistance(750).setSamples(1);
 
-        scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15)).setBackground(new Color(135,206,235));
+        scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.00015)).setBackground(new Color(135,206,235));
 
         scene.geometries.add(
                 new Polygon(new Point(-7000, -800, 0), new Point(-7000, 800, 0),
@@ -176,7 +176,7 @@ public class ThePictureTests {
                 new DirectionalLight(new Color(300, 150, 150), new Vector(0.2, -1, -0.4)));
 
 
-                ImageWriter imageWriter = new ImageWriter("box", 1000, 1000);
+                ImageWriter imageWriter = new ImageWriter("Finale Picture", 1000, 1000);
 
         camera.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene)) //
